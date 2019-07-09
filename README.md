@@ -31,12 +31,22 @@ paulczar/omgwtfssl
 docker-compose up
 ```
 
+## Configuration
+### Generate config
+TODO
+### Validate config
+```bash
+pykwalify -s config/strongHome-schema.yaml -d config/strongHome-config-example.yaml
+```
 ## TODO list
 - [ ] PKI
 - [ ] LDAP
 - [ ] 802.11X
 - [ ] Configuration in JSON
-- [ ] JSON Schema
+- [ ] YAML config
+  - [ ] Schema
+  - [ ] Reader
+  - [ ] Generator
 - [ ] Email server
 - [ ] VoIP?
 - [ ] Web for manager LDAP/restore passwords

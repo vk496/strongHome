@@ -1,0 +1,32 @@
+type: map
+required: yes
+mapping:
+ "strongHome":
+    type: map
+    required:  yes
+    mapping:
+      "list_users":
+        type: seq
+        required: true
+        desc: List of the users to deploy to the LDAP
+        sequence:
+          - type: map
+            mapping:
+              "user":
+                type: str
+                desc: The username of the user
+                required: yes
+                unique: true
+              "password":
+                type: str
+                desc: Password of the user
+                required: yes
+                range:
+                  min: 8
+              "services":
+                type: seq
+                desc: List of services that a user would have access
+                required: yes
+                sequence:
+                  - type: str
+                    enum: ['Admin', "802.11x", "OwnCloud", "Email", "VoIP"]

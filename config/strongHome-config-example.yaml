@@ -1,0 +1,14 @@
+strongHome:
+  list_users:
+    - user: admin
+      password: Asdfaksdnjasdnjasnjdas
+      services:
+        - Admin
+        - 802.11x
+        - OwnCloud
+        - Email
+        - VoIP
+    - user: test1
+      password: skdjaskjdasjk
+      services:
+        - 802.11x
