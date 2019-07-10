@@ -1,9 +1,14 @@
 strongHome:
+  list_services:
+    - 802.11x
+    - OwnCloud
+    - Email
+    - VoIP
   list_users:
     - user: admin
+      admin: yes
       password: Asdfaksdnjasdnjasnjdas
       services:
-        - Admin
         - 802.11x
         - OwnCloud
         - Email

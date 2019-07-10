@@ -5,6 +5,17 @@ mapping:
     type: map
     required:  yes
     mapping:
+      "list_services":
+        type: seq
+        required: true
+        desc: List of services
+        sequence:
+          - type: str
+            enum: &list-services
+              - 802.11x
+              - OwnCloud
+              - Email
+              - VoIP
       "list_users":
         type: seq
         required: true
@@ -23,10 +34,13 @@ mapping:
                 required: yes
                 range:
                   min: 8
+              "admin":
+                type: bool
+                desc: If this user have admin rights
               "services":
                 type: seq
                 desc: List of services that a user would have access
                 required: yes
                 sequence:
                   - type: str
-                    enum: ['Admin', "802.11x", "OwnCloud", "Email", "VoIP"]
+                    enum: *list-services

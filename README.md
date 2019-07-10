@@ -41,6 +41,7 @@ pykwalify -s config/strongHome-schema.yaml -d config/strongHome-config-example.y
 ## TODO list
 - [ ] PKI
 - [ ] LDAP
+  - [ ] Define admin permissions with YAML
 - [ ] 802.11X
 - [ ] Configuration in JSON
 - [ ] YAML config
