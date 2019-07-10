@@ -1,6 +1,6 @@
 strongHome:
   list_services:
-    - 802.11x
+    - Radius
     - OwnCloud
     - Email
     - VoIP
@@ -8,12 +8,23 @@ strongHome:
     - user: admin
       admin: yes
       password: Asdfaksdnjasdnjasnjdas
+      first_name: Leticia
+      last_name: Perez
       services:
-        - 802.11x
+        - Radius
         - OwnCloud
         - Email
         - VoIP
     - user: test1
       password: skdjaskjdasjk
+      first_name: Juan
+      last_name: Gonzalez
       services:
-        - 802.11x
+        - Radius
+    - user: test2
+      password: Asasdddadaddfaksdnjasdnjasnjdas
+      first_name: Pedro
+      last_name: Marín
+      services:
+        - Radius
+        - VoIP

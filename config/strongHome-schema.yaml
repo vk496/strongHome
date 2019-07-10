@@ -12,7 +12,7 @@ mapping:
         sequence:
           - type: str
             enum: &list-services
-              - 802.11x
+              - Radius
               - OwnCloud
               - Email
               - VoIP
@@ -37,6 +37,14 @@ mapping:
               "admin":
                 type: bool
                 desc: If this user have admin rights
+              "first_name":
+                type: str
+                desc: The first name of the person
+                required: yes
+              "last_name":
+                type: str
+                desc: The last name of the person
+                required: yes
               "services":
                 type: seq
                 desc: List of services that a user would have access

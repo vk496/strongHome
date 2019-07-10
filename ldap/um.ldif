@@ -14,7 +14,7 @@ objectclass: organizationalunit
 dn: uid=user1,ou=Personas,{{ LDAP_BASE_DN }}
 cn: Juan
 sn: Perez
-mail: user1@um.es
+mail: user1@{{ LDAP_DOMAIN }}
 postOfficeBox: 2147483648
 AstAccountContext: um
 AstAccountNAT: no
@@ -32,7 +32,7 @@ userPassword: password1
 dn: uid=user2,ou=Personas,{{ LDAP_BASE_DN }}
 cn: Sofia
 sn: Martinez
-mail: user2@um.es
+mail: user2@{{ LDAP_DOMAIN }}
 AstAccountContext: um
 AstAccountNAT: no
 AstAccountType: friend
@@ -47,7 +47,7 @@ userPassword: password2
 dn: uid=user3,ou=Personas,{{ LDAP_BASE_DN }}
 cn: Leticia
 sn: Gutierrez
-mail: user3@um.es
+mail: user3@{{ LDAP_DOMAIN }}
 AstAccountContext: um
 AstAccountNAT: no
 AstAccountType: friend
