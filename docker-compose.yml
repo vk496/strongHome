@@ -21,16 +21,34 @@ services:
     hostname: "ldap"
     networks:
       - ldap-net
+      - radius-net
 
-  webldap:
-    image: osixia/phpldapadmin:0.8.0
-    environment:
-      PHPLDAPADMIN_LDAP_HOSTS: openldap
+  freeradius:
+    build: radius
+    command: -XX
+    # volumes:
+    #   # - $PWD/radius/conf/clients.conf:/etc/raddb/clients.conf
+    #   - $PWD/radius/conf/users:/etc/raddb/mods-config/files/authorize
+    #   - $PWD/radius/conf/sites-available/default:/etc/raddb/sites-available/default
+    #   - $PWD/radius/conf/sites-available/inner-tunnel:/etc/raddb/sites-available/inner-tunnel
+    #   - $PWD/radius/conf/mods-available/ldap:/etc/raddb/mods-enabled/ldap
+    depends_on:
+      - openldap
     ports:
-      - "443:443"
-      - "80:80"
+      - "1812-1813:1812-1813/udp"
     networks:
-      - ldap-net
+      - radius-net
+
+  # webldap:
+  #   image: osixia/phpldapadmin:0.8.0
+  #   environment:
+  #     PHPLDAPADMIN_LDAP_HOSTS: openldap
+  #   ports:
+  #     - "443:443"
+  #     - "80:80"
+  #   networks:
+  #     - ldap-net
 
 networks:
   ldap-net:
+  radius-net:

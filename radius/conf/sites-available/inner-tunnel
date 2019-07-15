@@ -90,7 +90,7 @@ authorize {
 
 	#
 	#  Look for realms in user@domain format
-	# 
+	#
 	#  Note that proxying the inner tunnel authentication means
 	#  that the user MAY use one identity in the outer session
 	#  (e.g. "anonymous", and a different one here
@@ -151,7 +151,7 @@ authorize {
 
 	#
 	#  The ldap module reads passwords from the LDAP database.
-	-ldap
+	ldap
 
 	#
 	#  Enforce daily limits on time spent logged in.

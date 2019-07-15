@@ -306,7 +306,7 @@ authorize {
 	#  attributes in the request, and turning them into attributes
 	#  which are more standard.
 	#
-	#  It takes care of processing the 'raddb/mods-config/preprocess/hints' 
+	#  It takes care of processing the 'raddb/mods-config/preprocess/hints'
 	#  and the 'raddb/mods-config/preprocess/huntgroups' files.
 	preprocess
 
@@ -419,7 +419,7 @@ authorize {
 
 	#
 	#  The ldap module reads passwords from the LDAP database.
-	-ldap
+	ldap
 
 	#
 	#  Enforce daily limits on time spent logged in.

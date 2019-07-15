@@ -28,3 +28,9 @@ strongHome:
       services:
         - Radius
         - VoIP
+    - user: test3
+      password: 1234567890abc
+      first_name: Pedro
+      last_name: Marín
+      services:
+        - VoIP

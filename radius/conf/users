@@ -1,0 +1,17 @@
+# -*- text -*-
+#
+#	Copyright (C) 2009 Deploying RADIUS Partnerships
+#	All rights reserved.
+#
+#	Save this file as "raddb/users", after first backing up
+#	the copy that you have there.
+#
+#	http://deployingradius.com/documents/configuration/pap.html
+#
+#  Window 1: radiusd -X
+#  Window 2: radtest bob hello localhost 0 testing123
+#
+
+bob    Cleartext-Password := "hello"
+
+# End of the file
