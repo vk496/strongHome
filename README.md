@@ -54,4 +54,6 @@ pykwalify -s config/strongHome-schema.yaml -d config/strongHome-config-example.y
 - [ ] VoIP?
 - [ ] Web for manager LDAP/restore passwords
 - [ ] Design optional services (torrents, plex, etc.)
+- [ ] Dynamic auto-configuration stuff should be in a aislated service
+- [ ] Beautiful way to generate strongHome YAML config
 - [ ] Scalable services

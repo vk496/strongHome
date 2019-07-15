@@ -1,25 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+set -e
 
 SERVICES="Services"
 PEOPLE="People"
 
-if [ ! -s "$1" ]; then
-  >&2 echo "First argument missing strongHome config YAML"
-  exit 1
-fi
-
-if [ ! -s "$2" ]; then
-  >&2 echo "Second argument missing strongHome schema"
-  exit 1
-fi
-
-set -e
-pykwalify -s $2 -d $1 >/dev/null
-set +e
 
 FILE=$(cat $1)
-
-
 
 
 user_get_firstName() {
