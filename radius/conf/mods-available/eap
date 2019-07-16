@@ -182,7 +182,7 @@ eap {
 	#
 	tls-config tls-common {
 		# private_key_password = whatever
-		private_key_file = /cert/radius.um.es-key.pem
+		private_key_file = /cert/radius.{{ LOCAL_DOMAIN }}-key.pem
 
 		#  If Private key & Certificate are located in
 		#  the same file, then private_key_file &
@@ -218,7 +218,7 @@ eap {
 		#  give advice which will work everywhere.  Instead,
 		#  we give general guidelines.
 		#
-		certificate_file = /cert/radius.um.es.pem
+		certificate_file = /cert/radius.{{ LOCAL_DOMAIN }}.pem
 
 		#  Trusted Root CA list
 		#

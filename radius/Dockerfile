@@ -1,5 +1,7 @@
 FROM freeradius/freeradius-server:3.0.19-alpine
 
+RUN apk add --no-cache bash
+
 COPY misc/entry.sh /strongHome/
 
 COPY conf/clients.conf /etc/raddb/clients.conf
@@ -8,8 +10,8 @@ COPY conf/users /etc/raddb/mods-config/files/authorize
 COPY conf/sites-available/default /etc/raddb/sites-available/default
 COPY conf/sites-available/inner-tunnel /etc/raddb/sites-available/inner-tunnel
 
-COPY conf/mods-available/ldap /etc/raddb/mods-enabled/ldap
-COPY conf/mods-available/eap /etc/raddb/mods-enabled/eap
+COPY conf/mods-available/ldap /etc/raddb/mods-enabled/ldap.strongHome
+COPY conf/mods-available/eap /etc/raddb/mods-enabled/eap.strongHome
 
 
 ENTRYPOINT ["/strongHome/entry.sh"]

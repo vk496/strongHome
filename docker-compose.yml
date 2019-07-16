@@ -26,6 +26,8 @@ services:
   freeradius:
     build: radius
     command: -X
+    environment:
+      LOCAL_DOMAIN: "${LOCAL_DOMAIN}"
     volumes:
       - $PWD/openssl-ca/radius.${LOCAL_DOMAIN}-key.pem:/cert/radius.${LOCAL_DOMAIN}-key.pem
       - $PWD/openssl-ca/radius.${LOCAL_DOMAIN}.pem:/cert/radius.${LOCAL_DOMAIN}.pem
