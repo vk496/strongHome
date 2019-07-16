@@ -16,12 +16,12 @@ ldap {
 	#  - ldaps:// (LDAP over SSL)
 	#  - ldapi:// (LDAP over Unix socket)
 	#  - ldapc:// (Connectionless LDAP)
-	server = 'openldap'
+	server = 'ldaps://openldap'
 #	server = 'ldap.rrdns.example.org'
 #	server = 'ldap.rrdns.example.org'
 
 	#  Port to connect on, defaults to 389, will be ignored for LDAP URIs.
-#	port = 389
+	port = 636
 
 	#  Administrator account for searching and possibly modifying.
 	#  If using SASL + KRB5 these should be commented out.
@@ -548,7 +548,7 @@ ldap {
 		# using ldaps (port 636) connections
 #		start_tls = yes
 
-#		ca_file	= ${certdir}/cacert.pem
+		ca_file	= /cert/ca.pem
 
 #		ca_path	= ${certdir}
 #		certificate_file = /path/to/radius.crt
@@ -566,7 +566,7 @@ ldap {
 		#  The default is libldap's default, which varies based
 		#  on the contents of ldap.conf.
 
-#		require_cert	= 'demand'
+		require_cert	= 'hard'
 	}
 
 	#  As of version 3.0, the 'pool' section has replaced the

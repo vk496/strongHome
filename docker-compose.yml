@@ -2,30 +2,29 @@ version: '3'
 services:
   openldap:
     build: ldap
-    container_name: openldap
-    command: --loglevel debug
+    command: --loglevel info
     environment:
       LDAP_ORGANISATION: "strongHome"
       LDAP_DOMAIN: "${LOCAL_DOMAIN}"
       LDAP_ADMIN_PASSWORD: "admin"
-      HOSTNAME: ldap.${LOCAL_DOMAIN}
+      LDAP_TLS_CRT_FILENAME: ldap.${LOCAL_DOMAIN}.pem
+      LDAP_TLS_KEY_FILENAME: ldap.${LOCAL_DOMAIN}-key.pem
+      LDAP_TLS_CA_CRT_FILENAME: ca.pem
+      LDAP_TLS_ENFORCE: "true"
+      LDAP_TLS_VERIFY_CLIENT: try
     volumes:
       - $PWD/config/strongHome-schema.yaml:/strongHome/strongHome-schema.yaml
       - $PWD/config/strongHome-config-example.yaml:/strongHome/strongHome-config.yaml
-      # - $PWD/ldap/ldap:/var/lib/ldap
-      # - $PWD/ldap/slapd:/etc/ldap/slapd.d
-      # - $PWD/openssl-ca:/container/service/slapd/assets/certs/
-    ports:
-      - "389:389"
-    domainname: "${LOCAL_DOMAIN}" # important: same as hostname
-    hostname: "ldap"
+      - $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}-key.pem:/container/service/slapd/assets/certs/ldap.${LOCAL_DOMAIN}-key.pem
+      - $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}.pem:/container/service/slapd/assets/certs/ldap.${LOCAL_DOMAIN}.pem
+      - $PWD/openssl-ca/ca.pem:/container/service/slapd/assets/certs/ca.pem
     networks:
       - ldap-net
       - radius-net
 
   freeradius:
     build: radius
-    command: -X
+    # command: -X
     environment:
       LOCAL_DOMAIN: "${LOCAL_DOMAIN}"
     volumes:
@@ -33,10 +32,6 @@ services:
       - $PWD/openssl-ca/radius.${LOCAL_DOMAIN}.pem:/cert/radius.${LOCAL_DOMAIN}.pem
       - $PWD/openssl-ca/ca.pem:/cert/ca.pem
       - $PWD/openssl-ca/dh:/cert/dh
-    #   - $PWD/radius/conf/users:/etc/raddb/mods-config/files/authorize
-    #   - $PWD/radius/conf/sites-available/default:/etc/raddb/sites-available/default
-    #   - $PWD/radius/conf/sites-available/inner-tunnel:/etc/raddb/sites-available/inner-tunnel
-    #   - $PWD/radius/conf/mods-available/ldap:/etc/raddb/mods-enabled/ldap
     depends_on:
       - openldap
     ports:

@@ -22,7 +22,7 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_CSR=ldap.${LOCAL_DOMAIN}.csr \
 -e SSL_CERT=ldap.${LOCAL_DOMAIN}.pem \
 -e SSL_EXPIRE=730 `# 2 years` \
--e SSL_SUBJECT=LDAP \
+-e SSL_SUBJECT=openldap \
 paulczar/omgwtfssl
 
 docker run --rm -it -v $PWD/openssl-ca:/certs \
@@ -33,7 +33,7 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_CSR=radius.${LOCAL_DOMAIN}.csr \
 -e SSL_CERT=radius.${LOCAL_DOMAIN}.pem \
 -e SSL_EXPIRE=730 `# 2 years` \
--e SSL_SUBJECT=RADIUS \
+-e SSL_SUBJECT=freeradius \
 paulczar/omgwtfssl
 ```
 
