@@ -22,7 +22,18 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_CSR=ldap.${LOCAL_DOMAIN}.csr \
 -e SSL_CERT=ldap.${LOCAL_DOMAIN}.pem \
 -e SSL_EXPIRE=730 `# 2 years` \
--e SSL_SUBJECT=ldap.${LOCAL_DOMAIN} \
+-e SSL_SUBJECT=LDAP \
+paulczar/omgwtfssl
+
+docker run --rm -it -v $PWD/openssl-ca:/certs \
+-e SSL_SIZE=4096 \
+-e CA_SUBJECT="AAA ROOT CA strongHome" \
+-e CA_EXPIRE=3650 `# 10 years to expire the CA` \
+-e SSL_KEY=radius.${LOCAL_DOMAIN}-key.pem \
+-e SSL_CSR=radius.${LOCAL_DOMAIN}.csr \
+-e SSL_CERT=radius.${LOCAL_DOMAIN}.pem \
+-e SSL_EXPIRE=730 `# 2 years` \
+-e SSL_SUBJECT=RADIUS \
 paulczar/omgwtfssl
 ```
 

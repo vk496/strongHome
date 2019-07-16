@@ -25,9 +25,12 @@ services:
 
   freeradius:
     build: radius
-    command: -XX
-    # volumes:
-    #   # - $PWD/radius/conf/clients.conf:/etc/raddb/clients.conf
+    command: -X
+    volumes:
+      - $PWD/openssl-ca/radius.${LOCAL_DOMAIN}-key.pem:/cert/radius.${LOCAL_DOMAIN}-key.pem
+      - $PWD/openssl-ca/radius.${LOCAL_DOMAIN}.pem:/cert/radius.${LOCAL_DOMAIN}.pem
+      - $PWD/openssl-ca/ca.pem:/cert/ca.pem
+      - $PWD/openssl-ca/dh:/cert/dh
     #   - $PWD/radius/conf/users:/etc/raddb/mods-config/files/authorize
     #   - $PWD/radius/conf/sites-available/default:/etc/raddb/sites-available/default
     #   - $PWD/radius/conf/sites-available/inner-tunnel:/etc/raddb/sites-available/inner-tunnel

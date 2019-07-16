@@ -24,7 +24,7 @@ eap {
 	#  then that EAP type takes precedence over the
 	#  default type configured here.
 	#
-	default_eap_type = md5
+	default_eap_type = ttls
 
 	#  A list is maintained to correlate EAP-Response
 	#  packets with EAP-Request packets.  After a
@@ -181,8 +181,8 @@ eap {
 	#  authenticate via EAP-TLS!  This is likely not what you want.
 	#
 	tls-config tls-common {
-		private_key_password = whatever
-		private_key_file = ${certdir}/server.pem
+		# private_key_password = whatever
+		private_key_file = /cert/radius.um.es-key.pem
 
 		#  If Private key & Certificate are located in
 		#  the same file, then private_key_file &
@@ -218,7 +218,7 @@ eap {
 		#  give advice which will work everywhere.  Instead,
 		#  we give general guidelines.
 		#
-		certificate_file = ${certdir}/server.pem
+		certificate_file = /cert/radius.um.es.pem
 
 		#  Trusted Root CA list
 		#
@@ -231,7 +231,7 @@ eap {
 		#  In that case, this CA file should contain
 		#  *one* CA certificate.
 		#
-		ca_file = ${cadir}/ca.pem
+		ca_file =  /cert/ca.pem
 
 	 	#  OpenSSL will automatically create certificate chains,
 	 	#  unless we tell it to not do that.  The problem is that
@@ -281,7 +281,7 @@ eap {
 		#
 		#    openssl dhparam -out certs/dh 2048
 		#
-		dh_file = ${certdir}/dh
+		dh_file = /cert/dh
 
 		#  If your system doesn't have /dev/urandom,
 		#  you will need to create this file, and

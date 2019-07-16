@@ -33,7 +33,7 @@ mapping:
                 desc: Password of the user
                 required: yes
                 range:
-                  min: 8
+                  min: 4
               "admin":
                 type: bool
                 desc: If this user have admin rights
