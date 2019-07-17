@@ -3,6 +3,8 @@ services:
   openldap:
     build: ldap
     command: --loglevel info
+    hostname: openldap
+    # domainname: openldap
     environment:
       LDAP_ORGANISATION: "strongHome"
       LDAP_DOMAIN: "${LOCAL_DOMAIN}"
@@ -21,6 +23,8 @@ services:
     networks:
       - ldap-net
       - radius-net
+    env_file:
+      - .env
 
   freeradius:
     build: radius

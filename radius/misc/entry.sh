@@ -6,7 +6,7 @@ if [[ $STRONGHOME_TEST ]]; then
 
   echo "Hola mundo"
   # bats -h
-  exit 0
+  exit 1
 fi
 
 sleep 6

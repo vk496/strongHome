@@ -9,9 +9,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 RUN pip3 install pykwalify yq
 
 RUN set -e; \
-    git clone https://github.com/sstephenson/bats; \
+    git clone https://github.com/bats-core/bats-core bats; \
     cd bats; \
-    git checkout 03608115df2071fff4eaaff1605768c275e5f81f; \
+    git checkout 3adff324319193b3754974766e7119cad7ca862c; \
     ( ./install.sh /usr/local ); \
     cd ..; \
     rm -Rf bats

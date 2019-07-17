@@ -1,10 +1,18 @@
 version: '3'
 services:
   openldap:
+    # command: --loglevel debug
     environment:
       STRONGHOME_TEST: "true"
+      LDAP_ADMIN_PASSWORD: "admin"
     volumes:
       - $PWD/test/ldap:/test:ro
+      - $PWD/test/strongHome-config-test.yaml:/strongHome/strongHome-config-test.yaml
+    ports:
+      - 389:389
+      - 636:636
+    env_file:
+      - $PWD/test/test.env
 
 
   freeradius:
