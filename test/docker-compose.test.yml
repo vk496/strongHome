@@ -1,0 +1,24 @@
+version: '3'
+services:
+  openldap:
+    environment:
+      STRONGHOME_TEST: "true"
+    volumes:
+      - $PWD/test/ldap:/test:ro
+
+
+  freeradius:
+    command: -XX
+    environment:
+      STRONGHOME_TEST: "true"
+
+
+  # webldap:
+  #   image: osixia/phpldapadmin:0.8.0
+  #   environment:
+  #     PHPLDAPADMIN_LDAP_HOSTS: openldap
+  #   ports:
+  #     - "443:443"
+  #     - "80:80"
+  #   networks:
+  #     - ldap-net

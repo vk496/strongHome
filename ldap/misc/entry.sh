@@ -1,6 +1,40 @@
 #!/bin/bash
 set -e
 
+if [[ $STRONGHOME_TEST ]]; then
+  # set -x
+  # set +e
+
+  echo "Hola mundo"
+
+  tmp_fifo=ldap_output.txt
+  mkfifo $tmp_fifo || exit 1
+  # bats /test
+  /container/tool/run "$@" &> $tmp_fifo &
+
+  while read line; do
+    if [[ $line == *" slapd starting"* ]]; then
+      # echo "<$line>"
+      break
+    fi
+
+    # case $line in
+    #     "slapd starting") echo "Y found, breaking out."; break;;
+    #     *) echo "<$line>";;
+    # esac
+  done < $tmp_fifo
+
+  echo "@strongHome@ - Running tests"
+
+
+
+  bats /test
+
+  rm $tmp_fifo
+
+  exit 0
+fi
+
 
 if [ ! /strongHome/strongHome-config.yaml ]; then
   >&2 echo "Missing /strongHome/strongHome-config.yaml - config YAML"

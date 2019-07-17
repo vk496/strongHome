@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 
+if [[ $STRONGHOME_TEST ]]; then
+  set -x
+
+  echo "Hola mundo"
+  # bats -h
+  exit 0
+fi
+
 sleep 6
 
 LOCAL_DOMAIN_DC=$(echo $LOCAL_DOMAIN | sed "s/\./,dc=/g" | cat <(echo -n "dc=") -)
