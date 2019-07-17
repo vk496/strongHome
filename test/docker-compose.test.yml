@@ -19,6 +19,8 @@ services:
     command: -XX
     environment:
       STRONGHOME_TEST: "true"
+    volumes:
+      - $PWD/test/radius:/test:ro
 
 
   # webldap:

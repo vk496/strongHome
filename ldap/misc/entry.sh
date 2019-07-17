@@ -42,7 +42,7 @@ if [[ $STRONGHOME_TEST ]]; then
 
   bats /test
 
-  # sleep 2222
+  sleep 2222
 
   rm $tmp_fifo
 

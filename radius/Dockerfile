@@ -2,7 +2,9 @@ FROM freeradius/freeradius-server:3.0.19-alpine
 
 RUN apk add --no-cache \
   bash \
-  git
+  git \
+  nmap \
+  wpa_supplicant
 
 RUN set -e; \
     git clone https://github.com/bats-core/bats-core bats; \
