@@ -42,9 +42,13 @@ if [[ $STRONGHOME_TEST ]]; then
 
   bats /test
 
-  sleep 2222
+  redis-cli -h redis setnx STRONGHOME_LDAP READY
 
   rm $tmp_fifo
+
+  while [[ $(redis-cli -h redis get STRONGHOME_TEST_END) != "READY" ]]; do
+    sleep 1
+  done
 
   exit 0
 fi
@@ -66,4 +70,10 @@ hash yq
 
 echo "@strongHome@ - Done"
 
-/container/tool/run "$@"
+while read line; do
+  if [[ $line == *" slapd starting"* ]]; then
+    redis-cli -h redis setnx STRONGHOME_LDAP READY
+  fi
+
+  echo "$line"
+done < <(/container/tool/run "$@" 2>&1)

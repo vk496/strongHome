@@ -1,7 +1,14 @@
 #!/bin/bash
 set -e
 
-sleep 6
+echo "@strongHome@ - Waiting for LDAP"
+
+while [[ $(redis-cli -h redis get STRONGHOME_LDAP) != "READY" ]]; do
+  sleep 1
+done
+
+echo "@strongHome@ - LDAP ready!"
+
 #{{ RADIUS_SHARED_SECRET }}
 
 if [[ $STRONGHOME_TEST ]]; then
@@ -46,9 +53,9 @@ if [[ $STRONGHOME_TEST ]]; then
 
   bats /test
 
-  sleep 2222
+  redis-cli -h redis setnx STRONGHOME_TEST_END READY
 
-  exit 1
+  exit 0
 fi
 
 

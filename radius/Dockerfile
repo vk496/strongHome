@@ -4,7 +4,8 @@ RUN apk add --no-cache \
   bash \
   git \
   nmap \
-  wpa_supplicant
+  wpa_supplicant \
+  redis
 
 RUN set -e; \
     git clone https://github.com/bats-core/bats-core bats; \

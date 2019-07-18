@@ -66,6 +66,14 @@ services:
     env_file:
       - .env
 
+  redis:
+    image: redis:alpine
+    hostname: redis
+    networks:
+      - radius-net
+      - ldap-net
+
+
   # webldap:
   #   image: osixia/phpldapadmin:0.8.0
   #   environment:
