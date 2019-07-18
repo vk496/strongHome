@@ -19,7 +19,7 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_SIZE=4096 \
 -e CA_SUBJECT="AAA ROOT CA strongHome" \
 -e CA_EXPIRE=3650 `# 10 years to expire the CA` \
-paulczar/omgwtfssl
+vk496/omgwtfssl
 
 (cd openssl-ca && sudo rm secret.yaml key.* cert.pem)
 
@@ -34,7 +34,7 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_CERT=ldap.${LOCAL_DOMAIN}.pem \
 -e SSL_EXPIRE=730 `# 2 years` \
 -e SSL_SUBJECT=openldap \
-paulczar/omgwtfssl
+vk496/omgwtfssl
 
 docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_SIZE=4096 \
@@ -45,7 +45,7 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_CERT=radius.${LOCAL_DOMAIN}.pem \
 -e SSL_EXPIRE=730 `# 2 years` \
 -e SSL_SUBJECT=freeradius \
-paulczar/omgwtfssl
+vk496/omgwtfssl
 
 (cd openssl-ca && sudo rm secret.yaml key.* cert.pem)
 
@@ -72,6 +72,12 @@ docker run --rm -v $PWD:/remote vk496/stronghome-utils pykwalify -s config/stron
 ```bash
 docker-compose up --build --abort-on-container-exit
 ```
+
+## Unit tests
+```bash
+docker-compose -f docker-compose.yml -f test/docker-compose.test.yml up --build; docker-compose down
+```
+
 
 ## TODO list
 - [x] PKI
