@@ -1,10 +1,9 @@
 version: '3.3'
 services:
   openldap:
-    build: ldap
+    build: services/ldap
     command: --loglevel info
     hostname: openldap
-    # domainname: openldap
     environment:
       LDAP_ORGANISATION: "strongHome"
       LDAP_DOMAIN: "${LOCAL_DOMAIN}"
@@ -19,7 +18,7 @@ services:
         source: $PWD/config/strongHome-schema.yaml
         target: /strongHome/strongHome-schema.yaml
       - type: bind
-        source: $PWD/config/strongHome-config-example.yaml
+        source: $PWD/config/strongHome-config.yaml
         target: /strongHome/strongHome-config.yaml
       - type: bind
         source: $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}-key.pem
@@ -33,11 +32,12 @@ services:
     networks:
       - ldap-net
       - radius-net
+      - redis-net
     env_file:
       - .env
 
   freeradius:
-    build: radius
+    build: services/radius
     # command: -X
     environment:
       LOCAL_DOMAIN: "${LOCAL_DOMAIN}"
@@ -63,6 +63,7 @@ services:
       - "1812-1813:1812-1813/udp"
     networks:
       - radius-net
+      - redis-net
     env_file:
       - .env
 
@@ -70,8 +71,7 @@ services:
     image: redis:alpine
     hostname: redis
     networks:
-      - radius-net
-      - ldap-net
+      - redis-net
 
 
   # webldap:
@@ -87,3 +87,4 @@ services:
 networks:
   ldap-net:
   radius-net:
+  redis-net:

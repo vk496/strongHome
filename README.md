@@ -1,8 +1,19 @@
 # strongHome
 
-## Generate certs
+## Deploy
+### Define a domain
+
+Create a `.env` file with the `LOCAL_DOMAIN` variable at the root path of the project. For example:
+```
+LOCAL_DOMAIN=um.es
+```
+
+### Generate certs
+First, we need all the certificates that will be used by the services.
+
 ```bash
-sudo rm openssl-ca/*
+sudo rm -rf openssl-ca
+mkdir openssl-ca
 
 docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_SIZE=4096 \
@@ -36,37 +47,46 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_SUBJECT=freeradius \
 paulczar/omgwtfssl
 
+(cd openssl-ca && sudo rm secret.yaml key.* cert.pem)
+
 #radius shared secret
 docker run -v $PWD/openssl-ca:/certs --rm alpine sh -c "< /dev/urandom tr -dc \#@_\$%/\(\)=?A-Z-a-z-0-9 | head -c54 > /certs/radius-shared-secret"
 ```
 
-## Deploy
-```bash
-docker-compose up
-```
-
-## Configuration
 ### Generate config
 TODO
-### Validate config
+
+For test pruposes, you can use the example config:
+
 ```bash
-pykwalify -s config/strongHome-schema.yaml -d config/strongHome-config-example.yaml
+cp config/strongHome-config-example.yaml config/strongHome-config.yaml
 ```
+
+### Validate config
+Check if your config is correct before continue:
+```bash
+docker run --rm -v $PWD:/remote vk496/stronghome-utils pykwalify -s config/strongHome-schema.yaml -d config/strongHome-config.yaml
+```
+
+### Start the project
+```bash
+docker-compose up --build --abort-on-container-exit
+```
+
 ## TODO list
-- [ ] PKI
-- [ ] LDAP
+- [x] PKI
+- [X] LDAP
   - [ ] Define admin permissions with YAML
-  - [ ] Auto-generate config
-  - [ ] Unit tests
+  - [X] Auto-generate config
+  - [X] Unit tests
 - [ ] 802.11X
-- [ ] Configuration in JSON
-- [ ] YAML config
-  - [ ] Schema
-  - [ ] Reader
-  - [ ] Generator
+  - [x] Auto-generate config
+  - [ ] Tests for all kind of radius auth methods
+- [x] YAML config
+  - [x] Schema
 - [ ] Email server
 - [ ] VoIP?
-- [ ] Sync startup containers
+- [x] Sync startup containers
 - [ ] Web for manager LDAP/restore passwords
 - [ ] Design optional services (torrents, plex, etc.)
 - [ ] Dynamic auto-configuration stuff should be in a aislated service

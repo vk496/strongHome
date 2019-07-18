@@ -1,1 +1,3 @@
 openssl-ca/*
+config/strongHome-config.yaml
+.env
