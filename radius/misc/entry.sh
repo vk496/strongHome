@@ -54,6 +54,8 @@ if [[ $STRONGHOME_TEST ]]; then
   bats /test
 
   redis-cli -h redis setnx STRONGHOME_TEST_END READY
+  sleep 4
+  redis-cli -h redis shutdown nosave
 
   exit 0
 fi
