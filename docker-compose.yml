@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 services:
   openldap:
     build: ldap
@@ -15,11 +15,21 @@ services:
       LDAP_TLS_ENFORCE: "true"
       LDAP_TLS_VERIFY_CLIENT: try
     volumes:
-      - $PWD/config/strongHome-schema.yaml:/strongHome/strongHome-schema.yaml
-      - $PWD/config/strongHome-config-example.yaml:/strongHome/strongHome-config.yaml
-      - $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}-key.pem:/container/service/slapd/assets/certs/ldap.${LOCAL_DOMAIN}-key.pem
-      - $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}.pem:/container/service/slapd/assets/certs/ldap.${LOCAL_DOMAIN}.pem
-      - $PWD/openssl-ca/ca.pem:/container/service/slapd/assets/certs/ca.pem
+      - type: bind
+        source: $PWD/config/strongHome-schema.yaml
+        target: /strongHome/strongHome-schema.yaml
+      - type: bind
+        source: $PWD/config/strongHome-config-example.yaml
+        target: /strongHome/strongHome-config.yaml
+      - type: bind
+        source: $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}-key.pem
+        target: /container/service/slapd/assets/certs/ldap.${LOCAL_DOMAIN}-key.pem
+      - type: bind
+        source: $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}.pem
+        target: /container/service/slapd/assets/certs/ldap.${LOCAL_DOMAIN}.pem
+      - type: bind
+        source: $PWD/openssl-ca/ca.pem
+        target: /container/service/slapd/assets/certs/ca.pem
     networks:
       - ldap-net
       - radius-net
@@ -32,16 +42,29 @@ services:
     environment:
       LOCAL_DOMAIN: "${LOCAL_DOMAIN}"
     volumes:
-      - $PWD/openssl-ca/radius.${LOCAL_DOMAIN}-key.pem:/cert/radius.${LOCAL_DOMAIN}-key.pem
-      - $PWD/openssl-ca/radius.${LOCAL_DOMAIN}.pem:/cert/radius.${LOCAL_DOMAIN}.pem
-      - $PWD/openssl-ca/ca.pem:/cert/ca.pem
-      - $PWD/openssl-ca/dh:/cert/dh
+      - type: bind
+        source: $PWD/openssl-ca/dh
+        target: /cert/dh
+      - type: bind
+        source: $PWD/openssl-ca/ca.pem
+        target: /cert/ca.pem
+      - type: bind
+        source: $PWD/openssl-ca/radius.${LOCAL_DOMAIN}.pem
+        target: /cert/radius.${LOCAL_DOMAIN}.pem
+      - type: bind
+        source: $PWD/openssl-ca/radius.${LOCAL_DOMAIN}-key.pem
+        target: /cert/radius.${LOCAL_DOMAIN}-key.pem
+      - type: bind
+        source: $PWD/openssl-ca/radius-shared-secret
+        target: /cert/radius-shared-secret
     depends_on:
       - openldap
     ports:
       - "1812-1813:1812-1813/udp"
     networks:
       - radius-net
+    env_file:
+      - .env
 
   # webldap:
   #   image: osixia/phpldapadmin:0.8.0

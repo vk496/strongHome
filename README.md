@@ -35,6 +35,9 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_EXPIRE=730 `# 2 years` \
 -e SSL_SUBJECT=freeradius \
 paulczar/omgwtfssl
+
+#radius shared secret
+docker run -v $PWD/openssl-ca:/certs --rm alpine sh -c "< /dev/urandom tr -dc \#@_\$%/\(\)=?A-Z-a-z-0-9 | head -c54 > /certs/radius-shared-secret"
 ```
 
 ## Deploy

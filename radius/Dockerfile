@@ -16,7 +16,7 @@ RUN set -e; \
 
 COPY misc/entry.sh /strongHome/
 
-COPY conf/clients.conf /etc/raddb/clients.conf
+COPY conf/clients.conf /etc/raddb/clients.conf.strongHome
 COPY conf/users /etc/raddb/mods-config/files/authorize
 
 COPY conf/sites-available/default /etc/raddb/sites-available/default

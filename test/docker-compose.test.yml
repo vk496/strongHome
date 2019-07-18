@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 services:
   openldap:
     # command: --loglevel debug
@@ -7,7 +7,7 @@ services:
       LDAP_ADMIN_PASSWORD: "admin"
     volumes:
       - $PWD/test/ldap:/test:ro
-      - $PWD/test/strongHome-config-test.yaml:/strongHome/strongHome-config-test.yaml
+      - $PWD/test/strongHome-config-test.yaml:/strongHome/strongHome-config-test.yaml:ro
     ports:
       - 389:389
       - 636:636
