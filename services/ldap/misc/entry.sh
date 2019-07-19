@@ -38,11 +38,11 @@ if [[ $STRONGHOME_TEST ]]; then
 
   done < $tmp_fifo
 
+  redis-cli -h redis setnx STRONGHOME_LDAP READY
+
   echo "@strongHome@ - Running tests"
 
   bats /test
-
-  redis-cli -h redis setnx STRONGHOME_LDAP READY
 
   rm $tmp_fifo
 

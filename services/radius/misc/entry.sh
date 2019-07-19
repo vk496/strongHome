@@ -1,7 +1,19 @@
 #!/bin/bash
 set -e
 
+exit_on_error() {
+  send_redis
+  echo "@strongHome@ - Shutting down...."
+}
+
+send_redis() {
+  redis-cli -h redis setnx STRONGHOME_TEST_END READY
+  sleep 4
+  redis-cli -h redis shutdown nosave
+}
+
 echo "@strongHome@ - Waiting for LDAP"
+trap exit_on_error ERR
 
 while [[ $(redis-cli -h redis get STRONGHOME_LDAP) != "READY" ]]; do
   sleep 1
@@ -32,14 +44,16 @@ for file in $(find /etc/raddb/ -type f -name \*.strongHome); do
 done
 
 if [[ $STRONGHOME_TEST ]]; then
-  set +e
+  set -E
 
   tmp_fifo=radius_output.txt
   mkfifo $tmp_fifo || exit 1
 
 
-  /docker-entrypoint.sh "$@" &> $tmp_fifo &
-  # /docker-entrypoint.sh "$@" 2>&1 | tee $tmp_fifo &
+  echo "@strongHome@ - Starting service..."
+
+  radiusd -l /dev/stdout -f "$@" &> $tmp_fifo &
+  # exec radiusd -l /dev/stdout -f "$@" 2>&1 | tee $tmp_fifo &
 
   while read line; do
     if [[ $line == *"Ready to process requests"* ]]; then
@@ -53,9 +67,7 @@ if [[ $STRONGHOME_TEST ]]; then
 
   bats /test
 
-  redis-cli -h redis setnx STRONGHOME_TEST_END READY
-  sleep 4
-  redis-cli -h redis shutdown nosave
+  send_redis
 
   exit 0
 fi
@@ -63,4 +75,4 @@ fi
 
 echo "@strongHome@ - Done"
 
-/docker-entrypoint.sh "$@"
+exec radiusd -l /dev/stdout -f "$@"

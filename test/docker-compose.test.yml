@@ -16,7 +16,7 @@ services:
 
 
   freeradius:
-    command: -XX
+    # command: -X
     environment:
       STRONGHOME_TEST: "true"
     volumes:

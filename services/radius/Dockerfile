@@ -1,4 +1,4 @@
-FROM freeradius/freeradius-server:3.0.19-alpine
+FROM alpine
 
 RUN apk add --no-cache \
   bash \
@@ -6,6 +6,15 @@ RUN apk add --no-cache \
   nmap \
   wpa_supplicant \
   redis
+
+
+RUN apk add --no-cache \
+  freeradius \
+  freeradius-ldap \
+  freeradius-eap
+
+
+RUN sed -i 's/user = radius/user = root/g' /etc/raddb/radiusd.conf
 
 RUN set -e; \
     git clone https://github.com/bats-core/bats-core bats; \
