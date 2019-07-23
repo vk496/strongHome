@@ -5,6 +5,15 @@ mapping:
     type: map
     required:  yes
     mapping:
+      "admin_username":
+        type: str
+        required: yes
+        desc: LDAP Administrator username
+      "admin_password":
+        type: str
+        required: yes
+        desc: LDAP Administrator password
+        pattern: ^{CRYPT}\$.+
       "list_services":
         type: seq
         required: true
@@ -32,11 +41,6 @@ mapping:
                 type: str
                 desc: Password of the user
                 required: yes
-                range:
-                  min: 4
-              "admin":
-                type: bool
-                desc: If this user have admin rights
               "first_name":
                 type: str
                 desc: The first name of the person

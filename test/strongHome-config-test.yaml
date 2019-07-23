@@ -1,12 +1,14 @@
 strongHome:
+  admin_username: admin
+  # password: Asdfaksdnjasdnjasnjdas
+  admin_password: "{CRYPT}$6$rounds=10000$le4tJDMgacG8XWNz$Md6qRrSdLRn12kgRfgkG1gAUWy/IQiNk37reEfSswpPUnU9YOCFGUqwS/eHXzoou1x3hyQqd8v6brqIwBcKqh1"
   list_services:
     - Radius
     - OwnCloud
     - Email
     - VoIP
   list_users:
-    - user: admin
-      admin: yes
+    - user: pedro
       # password: Asdfaksdnjasdnjasnjdas
       password: "{CRYPT}$6$rounds=10000$le4tJDMgacG8XWNz$Md6qRrSdLRn12kgRfgkG1gAUWy/IQiNk37reEfSswpPUnU9YOCFGUqwS/eHXzoou1x3hyQqd8v6brqIwBcKqh1"
       first_name: Leticia

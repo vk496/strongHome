@@ -28,8 +28,6 @@ RUN set -e; \
     git clone --depth 1 https://github.com/ztombol/bats-support /bats/bats-support; \
     git clone --depth 1 https://github.com/ztombol/bats-assert /bats/bats-assert
 
-COPY misc/entry.sh /strongHome/
-
 COPY conf/clients.conf /etc/raddb/clients.conf.strongHome
 COPY conf/users /etc/raddb/mods-config/files/authorize
 
@@ -39,5 +37,7 @@ COPY conf/sites-available/inner-tunnel /etc/raddb/sites-available/inner-tunnel
 COPY conf/mods-available/ldap /etc/raddb/mods-enabled/ldap.strongHome
 COPY conf/mods-available/eap /etc/raddb/mods-enabled/eap.strongHome
 
+
+COPY misc/entry.sh /strongHome/
 
 ENTRYPOINT ["/strongHome/entry.sh"]
