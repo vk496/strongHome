@@ -47,6 +47,7 @@ docker-compose -f docker-compose.yml -f test/docker-compose.test.yml up --build;
   - [ ] Define admin permissions with YAML
   - [X] Auto-generate config
   - [X] Unit tests
+  - [ ] Define ACL policies for each application (Radius, VoIP, etc.) to have restricted access
 - [ ] 802.11X
   - [x] Auto-generate config
   - [ ] Tests for all kind of radius auth methods

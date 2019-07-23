@@ -17,6 +17,10 @@ RUN set -e; \
     cd ..; \
     rm -Rf bats
 
+RUN set -e; \
+    git clone --depth 1 https://github.com/ztombol/bats-support /bats/bats-support; \
+    git clone --depth 1 https://github.com/ztombol/bats-assert /bats/bats-assert
+
 COPY ldap.sh misc/entry.sh /strongHome/
 
 

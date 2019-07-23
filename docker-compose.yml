@@ -17,9 +17,7 @@ services:
       - type: bind
         source: $PWD/config/strongHome-schema.yaml
         target: /strongHome/strongHome-schema.yaml
-      - type: bind
-        source: $PWD/config/strongHome-config.yaml
-        target: /strongHome/strongHome-config.yaml
+      - $PWD/config/strongHome-config.yaml:/strongHome/strongHome-config.yaml
       - type: bind
         source: $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}-key.pem
         target: /container/service/slapd/assets/certs/ldap.${LOCAL_DOMAIN}-key.pem
