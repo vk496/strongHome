@@ -7,7 +7,6 @@ services:
     environment:
       LDAP_ORGANISATION: "strongHome"
       LDAP_DOMAIN: "${LOCAL_DOMAIN}"
-      LDAP_ADMIN_PASSWORD: "admin"
       LDAP_TLS_CRT_FILENAME: ldap.${LOCAL_DOMAIN}.pem
       LDAP_TLS_KEY_FILENAME: ldap.${LOCAL_DOMAIN}-key.pem
       LDAP_TLS_CA_CRT_FILENAME: ca.pem

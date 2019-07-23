@@ -7,20 +7,24 @@ if [ ! /strongHome/strongHome-schema.yaml ]; then
 fi
 
 if [[ $STRONGHOME_TEST ]]; then
-  # set -x
-  # set +e
+  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config-test.yaml
+else
+  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
+fi
 
-  if [ ! /strongHome/strongHome-config-test.yaml ]; then
-    >&2 echo "Missing /strongHome/strongHome-config-test.yaml - config YAML"
-    exit 1
-  fi
+if [ ! ${STRONGHOME_CONFIG_FILE} ]; then
+  >&2 echo "Missing ${STRONGHOME_CONFIG_FILE} - config YAML"
+  exit 1
+fi
 
-  pykwalify -s /strongHome/strongHome-schema.yaml -d /strongHome/strongHome-config-test.yaml
-  hash yq
+pykwalify -s /strongHome/strongHome-schema.yaml -d ${STRONGHOME_CONFIG_FILE}
+#Check if exist
+hash yq
 
-  /strongHome/ldap.sh /strongHome/strongHome-config-test.yaml /strongHome/strongHome-schema.yaml \
-    > /container/service/slapd/assets/config/bootstrap/ldif/custom/strongHome-test.ldif
+/strongHome/ldap.sh ${STRONGHOME_CONFIG_FILE} /strongHome/strongHome-schema.yaml > /container/service/slapd/assets/config/bootstrap/ldif/custom/strongHome.ldif
 
+
+if [[ $STRONGHOME_TEST ]]; then
   echo "@strongHome@ - Starting service..."
 
   tmp_fifo=ldap_output.txt
@@ -52,20 +56,6 @@ if [[ $STRONGHOME_TEST ]]; then
   exit 0
 fi
 
-
-if [ ! /strongHome/strongHome-config.yaml ]; then
-  >&2 echo "Missing /strongHome/strongHome-config.yaml - config YAML"
-  exit 1
-fi
-
-pykwalify -s /strongHome/strongHome-schema.yaml -d /strongHome/strongHome-config.yaml
-
-#Check if exist
-hash yq
-
-
-
-/strongHome/ldap.sh /strongHome/strongHome-config.yaml /strongHome/strongHome-schema.yaml > /container/service/slapd/assets/config/bootstrap/ldif/custom/strongHome.ldif
 
 echo "@strongHome@ - Done"
 
