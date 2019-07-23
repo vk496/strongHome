@@ -23,6 +23,8 @@ echo "@strongHome@ - LDAP ready!"
 
 #{{ RADIUS_SHARED_SECRET }}
 
+RADIUS_LDAP_PW=$(cat /cert/admin-ro-pw)
+
 if [[ $STRONGHOME_TEST ]]; then
   RADIUS_SHARED_SECRET=testing123
 else
@@ -36,6 +38,7 @@ for file in $(find /etc/raddb/ -type f -name \*.strongHome); do
   cat $file \
     | sed "s|{{ LOCAL_DOMAIN }}|${LOCAL_DOMAIN}|g" \
     | sed "s|{{ RADIUS_SHARED_SECRET }}|${RADIUS_SHARED_SECRET}|g" \
+    | sed "s|{{ RADIUS_LDAP_PW }}|${RADIUS_LDAP_PW}|g" \
     | sed "s|{{ LOCAL_DOMAIN_DC }}|${LOCAL_DOMAIN_DC}|g" \
   > $renamed_file
 

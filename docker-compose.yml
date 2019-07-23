@@ -29,6 +29,9 @@ services:
       - type: bind
         source: $PWD/openssl-ca/ca.pem
         target: /container/service/slapd/assets/certs/ca.pem
+      - type: bind
+        source: $PWD/openssl-ca/admin-ro-pw
+        target: /cert/admin-ro-pw
     networks:
       - ldap-net
       - radius-net
@@ -57,6 +60,9 @@ services:
       - type: bind
         source: $PWD/openssl-ca/radius-shared-secret
         target: /cert/radius-shared-secret
+      - type: bind
+        source: $PWD/openssl-ca/admin-ro-pw
+        target: /cert/admin-ro-pw
     depends_on:
       - openldap
     ports:

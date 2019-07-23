@@ -42,5 +42,6 @@ vk496/omgwtfssl
 
 #radius shared secret
 docker run -v $PWD/openssl-ca:/certs --rm alpine sh -c "< /dev/urandom tr -dc \#@_\$%/\(\)=?A-Z-a-z-0-9 | head -c54 > /certs/radius-shared-secret"
+docker run -v $PWD/openssl-ca:/certs --rm alpine sh -c "< /dev/urandom tr -dc \#@_\$%/\(\)=?A-Z-a-z-0-9 | head -c54 > /certs/admin-ro-pw"
 
 curl https://2ton.com.au/dhparam/3072 -o openssl-ca/dh
