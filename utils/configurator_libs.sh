@@ -3,17 +3,17 @@
 declare -A STRONGHOME_USERS
 
 
-function arr_exists(){
+function user_exists(){
   # https://stackoverflow.com/questions/13219634/easiest-way-to-check-for-an-index-or-a-key-in-an-array
   [ ${STRONGHOME_USERS[$1]+vk496} ]
 }
 
 function add_user() {
-  if ! arr_exists $1; then
+  if ! user_exists $1; then
      STRONGHOME_USERS[$1]=INIT
+     return 0
   else
-    echo "$1 ALREADY EXISTS"
-    exit 1
+    return 1
   fi
 }
 
