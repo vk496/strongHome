@@ -1,6 +1,27 @@
 #!/bin/bash
-set -e
 
+if [[ $# -eq 0 ]]; then
+  echo "Error - Missing parameter"
+  exit 1
+fi
+
+if [[ ! -f $1 ]]; then
+  echo "Error - File '$1' not exist"
+  exit 1
+fi
+
+source $1
+if [[ $? -ne 0 ]]; then
+  echo "Error - File '$1' is not a valid env file"
+  exit 1
+fi
+
+if [[ ! ${LOCAL_DOMAIN} ]]; then
+  echo "Error - \$LOCAL_DOMAIN is not defined"
+  exit 1
+fi
+
+set -e
 sudo rm -rf openssl-ca
 mkdir openssl-ca
 
@@ -11,10 +32,6 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 vk496/omgwtfssl
 
 (cd openssl-ca && sudo rm secret.yaml key.* cert.pem)
-
-source .env
-
-[[ ${LOCAL_DOMAIN} ]] || ( echo "Error, \$LOCAL_DOMAIN not defined"; exit 1 )
 
 docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_SIZE=4096 \

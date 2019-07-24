@@ -12,7 +12,7 @@ echo "LOCAL_DOMAIN=um.es" > .env
 First, we need all the certificates that will be used by the services. Generate them with this:
 
 ```bash
-./utils/generate-crypto-stuff.sh
+./utils/generate-crypto-stuff.sh .env
 ```
 
 ### Generate config
