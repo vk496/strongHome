@@ -25,6 +25,8 @@ COPY lib/asterisk.schema /container/service/slapd/assets/config/bootstrap/schema
 
 COPY lib/03-memberOf.ldif /container/service/slapd/assets/config/bootstrap/ldif/03-memberOf.ldif
 COPY lib/02-security.ldif /container/service/slapd/assets/config/bootstrap/ldif/custom/
+COPY lib/admins-pw-change.ldif /container/service/slapd/assets/config/bootstrap/ldif/custom/zz-admin-pw.ldif.strongHome
+COPY lib/06-root-pw-change.ldif /container/service/slapd/assets/config/bootstrap/ldif/custom/06-root-pw-change.ldif.strongHome
 
 COPY ldap.sh misc/entry.sh /strongHome/
 

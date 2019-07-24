@@ -11,7 +11,7 @@ load '/bats/bats-assert/load.bash'
 
 
 @test "Accept TLS connection" {
-  run ldapsearch -H ldaps://localhost:636 -D "cn=admin,dc=um,dc=es" -w admin -b "dc=um,dc=es" "" -Z
+  run ldapsearch -H ldaps://localhost:636 -D "cn=admin,dc=um,dc=es" -w Asdfaksdnjasdnjasnjdas -b "dc=um,dc=es" "" -Z
 
   assert_success
 }

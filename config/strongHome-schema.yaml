@@ -5,10 +5,6 @@ mapping:
     type: map
     required:  yes
     mapping:
-      "admin_username":
-        type: str
-        required: yes
-        desc: LDAP Administrator username
       "admin_password":
         type: str
         required: yes
