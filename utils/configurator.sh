@@ -134,7 +134,18 @@ while [[ ! $ADVSEL ]] || ([[ $ADVSEL ]] && [[ $ADVSEL -ne 0 ]]); do
           whiptail --title "Option 1" --msgbox "Sorry, not implemented yet" 8 45
       ;;
 
-      0) generate_config | yq -y .
+      0) generate_config | yq -y . > strongHome-config.yaml
       ;;
   esac
 done
+
+
+pykwalify -s /remote/config/strongHome-schema.yaml -d strongHome-config.yaml
+
+if [[ $? -eq 0 ]]; then
+  cp strongHome-config.yaml /remote/config/strongHome-config.yaml
+  echo "File saved at ./config/strongHome-config.yaml"
+else
+  echo "Critical error. Please, report to maintainer"
+  exit 3
+fi

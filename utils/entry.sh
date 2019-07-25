@@ -12,3 +12,6 @@ if [[ $1 == "config" ]]; then
 
   ./configurator.sh
 fi
+
+cd /remote
+bash "$@"
