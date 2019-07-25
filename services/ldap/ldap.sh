@@ -77,6 +77,8 @@ EOF
 
 echo "$FILE" | yq -r '.strongHome.list_services[]' | while read service; do
 
+if [[ "$(echo "$FILE" | yq -r ".strongHome.list_users[] | select(.services | index(\"${service}\")) | .user")" ]]; then
+
 cat <<EOF
 #${service}
 dn: cn=${service},ou=${SERVICES},{{ LDAP_BASE_DN }}
@@ -91,4 +93,5 @@ done
 
 EOF
 
+fi
 done
