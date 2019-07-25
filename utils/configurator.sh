@@ -66,7 +66,7 @@ function list_services() {
 
   whiptail --title "Check list example" --checklist \
       "Select authorized services for asd" 12 62 4 \
-      "${LIST_SERVICES[@]}"
+      "${LIST_SERVICES[@]}" 3>&1 1>&2 2>&3
 }
 
 function configure_user() {
@@ -74,11 +74,13 @@ function configure_user() {
   local NEW_ENCRYPTED_PW=$(create_password $NEW_USERNAME)
   local NEW_FN=$(generic_inputbox "Enter the first name of '$NEW_USERNAME'")
   local NEW_LN=$(generic_inputbox "Enter the last name of '$NEW_USERNAME'")
+  local NEW_SERVICES=($(list_services))
+
 }
 
-list_services
-# add_user asd
-# configure_user asd
+# list_services
+add_user asd
+configure_user asd
 exit
 
 # Ask for domain
