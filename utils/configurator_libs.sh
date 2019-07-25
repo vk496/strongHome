@@ -3,6 +3,26 @@
 declare -A STRONGHOME_USERS
 
 
+
+function generate_config() {
+
+  jo -p strongHome=$(jo admin_password="$ADMIN_PWD_ENCRYPTED" list_services=$(jo -a $(cat /remote/config/strongHome-schema.yaml | yq -r ".mapping.strongHome.mapping.list_services.sequence[].enum[]")) list_users=$(jo -a \
+    $(for user in "${!STRONGHOME_USERS[@]}"; do
+        password=$(echo ${STRONGHOME_USERS[$user]} | cut -d: -f1)
+        fn=$(echo ${STRONGHOME_USERS[$user]} | cut -d: -f2)
+        ln=$(echo ${STRONGHOME_USERS[$user]} | cut -d: -f3)
+
+        jo user="$user" password="$password" first_name="$fn" last_name="$ln" services=$(jo -a \
+          $(
+            for ser in "$(echo ${STRONGHOME_USERS[$user]} | cut -d: -f4- | sed 's/:/ /g')"; do
+              echo $ser
+            done
+          )
+        )
+      done
+    )))
+}
+
 function user_exists(){
   # https://stackoverflow.com/questions/13219634/easiest-way-to-check-for-an-index-or-a-key-in-an-array
   [ ${STRONGHOME_USERS[$1]+vk496} ]
@@ -11,6 +31,15 @@ function user_exists(){
 function add_user() {
   if ! user_exists $1; then
      STRONGHOME_USERS[$1]=INIT
+     return 0
+  else
+    return 1
+  fi
+}
+
+function fill_user() {
+  if user_exists $1; then
+     STRONGHOME_USERS[$1]="$2"
      return 0
   else
     return 1
