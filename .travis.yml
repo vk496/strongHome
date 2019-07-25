@@ -4,8 +4,7 @@ services:
   - docker
 
 before_install:
-  - echo "LOCAL_DOMAIN=um.es" > .env
-  - ./utils/generate-crypto-stuff.sh .env
+  - ./utils/generate-crypto-stuff.sh
 
 script:
   - set -e

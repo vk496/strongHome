@@ -11,8 +11,6 @@ services:
     ports:
       - 389:389
       - 636:636
-    env_file:
-      - $PWD/test/test.env
 
 
   freeradius:

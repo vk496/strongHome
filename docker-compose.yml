@@ -6,9 +6,9 @@ services:
     hostname: openldap
     environment:
       LDAP_ORGANISATION: "strongHome"
-      LDAP_DOMAIN: "${LOCAL_DOMAIN}"
-      LDAP_TLS_CRT_FILENAME: ldap.${LOCAL_DOMAIN}.pem
-      LDAP_TLS_KEY_FILENAME: ldap.${LOCAL_DOMAIN}-key.pem
+      LDAP_DOMAIN: "strongHome.vk496"
+      LDAP_TLS_CRT_FILENAME: ldap.pem
+      LDAP_TLS_KEY_FILENAME: ldap-key.pem
       LDAP_TLS_CA_CRT_FILENAME: ca.pem
       LDAP_TLS_ENFORCE: "true"
       LDAP_TLS_VERIFY_CLIENT: try
@@ -18,11 +18,11 @@ services:
         target: /strongHome/strongHome-schema.yaml
       - $PWD/config/strongHome-config.yaml:/strongHome/strongHome-config.yaml
       - type: bind
-        source: $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}-key.pem
-        target: /container/service/slapd/assets/certs/ldap.${LOCAL_DOMAIN}-key.pem
+        source: $PWD/openssl-ca/ldap-key.pem
+        target: /container/service/slapd/assets/certs/ldap-key.pem
       - type: bind
-        source: $PWD/openssl-ca/ldap.${LOCAL_DOMAIN}.pem
-        target: /container/service/slapd/assets/certs/ldap.${LOCAL_DOMAIN}.pem
+        source: $PWD/openssl-ca/ldap.pem
+        target: /container/service/slapd/assets/certs/ldap.pem
       - type: bind
         source: $PWD/openssl-ca/ca.pem
         target: /container/service/slapd/assets/certs/ca.pem
@@ -33,14 +33,10 @@ services:
       - ldap-net
       - radius-net
       - redis-net
-    env_file:
-      - .env
 
   freeradius:
     build: services/radius
     # command: -X
-    environment:
-      LOCAL_DOMAIN: "${LOCAL_DOMAIN}"
     volumes:
       - type: bind
         source: $PWD/openssl-ca/dh
@@ -49,11 +45,11 @@ services:
         source: $PWD/openssl-ca/ca.pem
         target: /cert/ca.pem
       - type: bind
-        source: $PWD/openssl-ca/radius.${LOCAL_DOMAIN}.pem
-        target: /cert/radius.${LOCAL_DOMAIN}.pem
+        source: $PWD/openssl-ca/radius.pem
+        target: /cert/radius.pem
       - type: bind
-        source: $PWD/openssl-ca/radius.${LOCAL_DOMAIN}-key.pem
-        target: /cert/radius.${LOCAL_DOMAIN}-key.pem
+        source: $PWD/openssl-ca/radius-key.pem
+        target: /cert/radius-key.pem
       - type: bind
         source: $PWD/openssl-ca/radius-shared-secret
         target: /cert/radius-shared-secret
@@ -67,8 +63,6 @@ services:
     networks:
       - radius-net
       - redis-net
-    env_file:
-      - .env
 
   redis:
     image: redis:alpine

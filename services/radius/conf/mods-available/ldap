@@ -25,12 +25,12 @@ ldap {
 
 	#  Administrator account for searching and possibly modifying.
 	#  If using SASL + KRB5 these should be commented out.
-	identity = 'cn=admin-ro,ou=Services,{{ LOCAL_DOMAIN_DC }}'
+	identity = 'cn=admin-ro,ou=Services,dc=strongHome,dc=vk496'
 	password = '{{ RADIUS_LDAP_PW }}'
 
 	#  Unless overridden in another section, the dn from which all
 	#  searches will start from.
-	base_dn = '{{ LOCAL_DOMAIN_DC }}'
+	base_dn = 'dc=strongHome,dc=vk496'
 
 	#
 	#  You can run the 'ldapsearch' command line tool using the
@@ -196,7 +196,7 @@ ldap {
 		#  For Active Directory, you should use
 		#  "samaccountname=" instead of "uid="
 		#
-		filter   = "(&(uid=%{%{Stripped-User-Name}:-%{User-Name}})(memberof=cn=Radius,ou=Services,{{ LOCAL_DOMAIN_DC }}))"
+		filter   = "(&(uid=%{%{Stripped-User-Name}:-%{User-Name}})(memberof=cn=Radius,ou=Services,dc=strongHome,dc=vk496))"
 
 		#  SASL parameters to use for user binds
 		#

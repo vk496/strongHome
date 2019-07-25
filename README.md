@@ -1,12 +1,6 @@
 # strongHome
 
 ## Deploy
-### Define a domain
-
-Create a `.env` file with the `LOCAL_DOMAIN` variable at the root path of the project with the DNS name that you would like to use. In this example I will use `um.es`:
-```bash
-echo "LOCAL_DOMAIN=um.es" > .env
-```
 
 ### Generate certs
 First, we need all the certificates that will be used by the services. Generate them with this:
