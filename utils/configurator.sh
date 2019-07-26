@@ -2,6 +2,12 @@
 
 set -e
 
+if [[ -f /remote/config/strongHome-schema.yaml ]]; then
+  STRONGHOME_SCHEMA_PREFIX=/remote
+else
+  STRONGHOME_SCHEMA_PREFIX=.
+fi
+
 my_dir="$(dirname "$0")"
 source $my_dir/configurator_libs.sh
 
@@ -47,7 +53,7 @@ function generic_inputbox() {
 function list_services() {
 
   LIST_SERVICES=()
-  for service in $(cat /remote/config/strongHome-schema.yaml | yq -r ".mapping.strongHome.mapping.list_services.sequence[].enum[]"); do
+  for service in $(cat ${STRONGHOME_SCHEMA_PREFIX}/config/strongHome-schema.yaml | yq -r ".mapping.strongHome.mapping.list_services.sequence[].enum[]"); do
 
     desc=""
     case $service in
@@ -140,10 +146,10 @@ while [[ ! $ADVSEL ]] || ([[ $ADVSEL ]] && [[ $ADVSEL -ne 0 ]]); do
 done
 
 
-pykwalify -s /remote/config/strongHome-schema.yaml -d strongHome-config.yaml
+pykwalify -s ${STRONGHOME_SCHEMA_PREFIX}/config/strongHome-schema.yaml -d strongHome-config.yaml
 
 if [[ $? -eq 0 ]]; then
-  cp strongHome-config.yaml /remote/config/strongHome-config.yaml
+  cp strongHome-config.yaml ${STRONGHOME_SCHEMA_PREFIX}/config/strongHome-config.yaml
   echo "File saved at ./config/strongHome-config.yaml"
 else
   echo "Critical error. Please, report to maintainer"
