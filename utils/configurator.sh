@@ -42,7 +42,6 @@ function create_password() {
   done
 
   PASSWORD=$(echo "$PASSWORD" | generate_pw)
-  sleep 3
   echo "{CRYPT}$PASSWORD"
   unset PASSWORD
   return 0
