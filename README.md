@@ -6,20 +6,24 @@
 First, we need all the certificates that will be used by the services. Generate them with this:
 
 ```bash
-./utils/generate-crypto-stuff.sh .env
+./utils/generate-crypto-stuff.sh
 ```
 
 ### Generate config
-TODO
+For simple configuration of the project, I strongly recommend to use "StrongHome Configurator". Launch it with:
 
-For test pruposes, you can use the example config:
+```bash
+docker run -it --rm -v $PWD:/remote vk496/stronghome-utils config
+```
+
+For test pruposes, you can use directly the example config:
 
 ```bash
 cp test/strongHome-config-test.yaml config/strongHome-config.yaml
 ```
 
 ### Validate config
-Check if your config is correct before continue:
+Check if your config is correct before continue. You can ommit this step if you have used "StrongHome Configurator" or the example config:
 ```bash
 docker run --rm -v $PWD:/remote vk496/stronghome-utils pykwalify -s config/strongHome-schema.yaml -d config/strongHome-config.yaml
 ```
@@ -38,11 +42,11 @@ docker-compose -f docker-compose.yml -f test/docker-compose.test.yml up --build;
 ## TODO list
 - [x] PKI
 - [X] LDAP
-  - [ ] Define admin permissions with YAML
+  - [X] Define admin permissions with YAML
   - [X] Auto-generate config
   - [X] Unit tests
   - [ ] Define ACL policies for each application (Radius, VoIP, etc.) to have restricted access
-- [ ] 802.11X
+- [X] 802.11X
   - [x] Auto-generate config
   - [ ] Tests for all kind of radius auth methods
 - [x] YAML config
@@ -53,5 +57,5 @@ docker-compose -f docker-compose.yml -f test/docker-compose.test.yml up --build;
 - [ ] Web for manager LDAP/restore passwords
 - [ ] Design optional services (torrents, plex, etc.)
 - [ ] Dynamic auto-configuration stuff should be in a aislated service
-- [ ] Beautiful way to generate strongHome YAML config
+- [X] Beautiful way to generate strongHome YAML config
 - [ ] Scalable services
