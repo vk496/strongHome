@@ -81,5 +81,5 @@ function valid_pw() {
 # stdin - cleartext password
 # ret - Encrypted password
 function generate_pw() {
-  cat - | mkpasswd -m sha512crypt -R 10000 -S `head -c 40 /dev/random | base64 | sed -e 's/+/./g' |  cut -b 10-25` -s
+  cat - | mkpasswd -m sha512crypt -R 10000 -S `head -c 40 /dev/urandom | base64 | sed -e 's/+/./g' |  cut -b 10-25` -s
 }
