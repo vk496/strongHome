@@ -71,6 +71,15 @@ services:
       - redis-net
 
 
+  simpleca:
+    build: services/simpleca
+    volumes:
+      - type: bind
+        source: $PWD/openssl-ca/ca.pem
+        target: /usr/share/nginx/html/ca.pem
+    ports:
+      - "80:80"
+
   # webldap:
   #   image: osixia/phpldapadmin:0.8.0
   #   environment:
