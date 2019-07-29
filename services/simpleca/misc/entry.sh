@@ -10,6 +10,9 @@ function wait_and_exit () {
   kill -s SIGTERM 1
 }
 
+chmod g+r /cert/radius-key.pem
+adduser nginx root
+
 spawn-fcgi -u nginx -s /run/fcgi.sock /usr/bin/fcgiwrap && nginx -g "daemon off;" &
 MAIN_PROCESS=$!
 

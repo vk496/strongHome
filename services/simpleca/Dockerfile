@@ -5,10 +5,14 @@ RUN apk add --update \
       spawn-fcgi \
       redis \
       perl-cgi \
-      openssl
+      openssl \
+      util-linux \
+      nano
 
 COPY web/* /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY lib/template.mobileconfig.sh /
+
 
 COPY misc/entry.sh /
 
