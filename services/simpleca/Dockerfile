@@ -2,8 +2,10 @@ FROM nginx:alpine-perl
 
 RUN apk add --update \
       fcgiwrap \
-      spawn-fcgi
+      spawn-fcgi \
+      redis
 
 COPY web/* /usr/share/nginx/html/
+COPY misc/entry.sh /
 
-CMD spawn-fcgi -s /run/fcgi.sock /usr/bin/fcgiwrap && nginx -g "daemon off;"
+ENTRYPOINT ["/entry.sh"]

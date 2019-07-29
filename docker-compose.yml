@@ -79,6 +79,8 @@ services:
         target: /usr/share/nginx/html/ca.pem
     ports:
       - "80:80"
+    networks:
+      - redis-net
 
   # webldap:
   #   image: osixia/phpldapadmin:0.8.0
