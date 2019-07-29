@@ -10,7 +10,7 @@ function wait_and_exit () {
   kill -s SIGTERM 1
 }
 
-spawn-fcgi -s /run/fcgi.sock /usr/bin/fcgiwrap && nginx -g "daemon off;" &
+spawn-fcgi -u nginx -s /run/fcgi.sock /usr/bin/fcgiwrap && nginx -g "daemon off;" &
 MAIN_PROCESS=$!
 
 wait_and_exit &

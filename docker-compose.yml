@@ -77,6 +77,12 @@ services:
       - type: bind
         source: $PWD/openssl-ca/ca.pem
         target: /usr/share/nginx/html/ca.pem
+      - type: bind
+        source: $PWD/openssl-ca/radius.pem
+        target: /cert/radius.pem
+      - type: bind
+        source: $PWD/openssl-ca/radius-key.pem
+        target: /cert/radius-key.pem
     ports:
       - "80:80"
     networks:
