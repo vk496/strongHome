@@ -16,7 +16,9 @@ services:
       - type: bind
         source: $PWD/config/strongHome-schema.yaml
         target: /strongHome/strongHome-schema.yaml
-      - $PWD/config/strongHome-config.yaml:/strongHome/strongHome-config.yaml
+      - type: bind
+        source: $PWD/config/strongHome-config.yaml
+        target: /strongHome/strongHome-config.yaml
       - type: bind
         source: $PWD/openssl-ca/ldap-key.pem
         target: /container/service/slapd/assets/certs/ldap-key.pem
@@ -29,6 +31,8 @@ services:
       - type: bind
         source: $PWD/openssl-ca/admin-ro-pw
         target: /cert/admin-ro-pw
+    ports:
+      - "636:636/tcp"
     networks:
       - ldap-net
       - radius-net

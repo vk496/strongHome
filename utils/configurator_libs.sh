@@ -9,12 +9,10 @@ function generate_config() {
   jo -p strongHome=$(jo admin_password="$ADMIN_PWD_ENCRYPTED" list_services=$(jo -a $(cat ${STRONGHOME_SCHEMA_PREFIX}/config/strongHome-schema.yaml | yq -r ".mapping.strongHome.mapping.list_services.sequence[].enum[]")) list_users=$(jo -a \
     $(for user in "${!STRONGHOME_USERS[@]}"; do
         password=$(echo ${STRONGHOME_USERS[$user]} | cut -d: -f1)
-        fn=$(echo ${STRONGHOME_USERS[$user]} | cut -d: -f2)
-        ln=$(echo ${STRONGHOME_USERS[$user]} | cut -d: -f3)
 
-        jo user="$user" password="$password" first_name="$fn" last_name="$ln" services=$(jo -a \
+        jo user="$user" password="$password" services=$(jo -a \
           $(
-            for ser in "$(echo ${STRONGHOME_USERS[$user]} | cut -d: -f4- | sed 's/:/ /g')"; do
+            for ser in "$(echo ${STRONGHOME_USERS[$user]} | cut -d: -f2- | sed 's/:/ /g')"; do
               echo $ser
             done
           )

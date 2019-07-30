@@ -37,14 +37,6 @@ mapping:
                 type: str
                 desc: Password of the user
                 required: yes
-              "first_name":
-                type: str
-                desc: The first name of the person
-                required: yes
-              "last_name":
-                type: str
-                desc: The last name of the person
-                required: yes
               "services":
                 type: seq
                 desc: List of services that a user would have access

@@ -9,16 +9,6 @@ RADIUS_LDAP_PW_ENCRYPTED=$(slappasswd -c '$6$rounds=10000$%.16s' -s "$(cat /cert
 FILE=$(cat $1)
 
 
-user_get_firstName() {
-  local user=$1
-  echo "$FILE" | yq -r ".strongHome.list_users[] | select(.user == \"$user\") | .first_name"
-}
-
-user_get_lastName() {
-  local user=$1
-  echo "$FILE" | yq -r ".strongHome.list_users[] | select(.user == \"$user\") | .last_name"
-}
-
 user_get_pw() {
   local user=$1
   echo "$FILE" | yq -r ".strongHome.list_users[] | select(.user == \"$user\") | .password"

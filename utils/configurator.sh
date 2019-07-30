@@ -47,16 +47,6 @@ function create_password() {
   return 0
 }
 
-function generic_inputbox() {
-  whiptail \
-      --inputbox "$1" \
-      8 78 \
-      --title "User attributes" \
-      --cancel-button "Exit" \
-      --backtitle "StrongHome Configurator" \
-       3>&1 1>&2 2>&3
-}
-
 function list_services() {
 
   LIST_SERVICES=()
@@ -120,12 +110,6 @@ function create_username() {
 function configure_user() {
   NEW_USERNAME=$1
   NEW_ENCRYPTED_PW=$(create_password $NEW_USERNAME)
-  [[ $? -ne 0 ]] && exit 1
-
-  NEW_FN=$(generic_inputbox "Enter the first name of '$NEW_USERNAME'")
-  [[ $? -ne 0 ]] && exit 1
-
-  NEW_LN=$(generic_inputbox "Enter the last name of '$NEW_USERNAME'")
   [[ $? -ne 0 ]] && exit 1
 
   NEW_SERVICES=($(list_services))
