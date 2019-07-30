@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     python3-setuptools \
     git \
     netcat \
-    redis-server
+    redis-server \
+    bc
 
 RUN pip3 install pykwalify yq
 

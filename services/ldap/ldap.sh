@@ -24,6 +24,15 @@ user_get_pw() {
   echo "$FILE" | yq -r ".strongHome.list_users[] | select(.user == \"$user\") | .password"
 }
 
+user_get_uuid() {
+  username=$1
+  min_uid=1010
+  max_uid=65535
+  generated_number=$(echo "$1" | sha256sum | cut -d" " -f1 | sed 's/[a-zA-Z]//g')
+  echo "(($generated_number-$min_uid) % ($max_uid-$min_uid+1)) + $min_uid" | bc
+  #echo 3333
+}
+
 cat <<EOF
 #Group of people
 dn: ou=${PEOPLE},{{ LDAP_BASE_DN }}
@@ -50,12 +59,16 @@ echo "$FILE" | yq -r '.strongHome.list_users[].user' | while read ldap_user; do
 
 cat <<EOF
 dn: uid=${ldap_user},ou=${PEOPLE},{{ LDAP_BASE_DN }}
-cn: `user_get_firstName $ldap_user`
-sn: `user_get_lastName $ldap_user`
-mail: ${ldap_user}@{{ LDAP_DOMAIN }}
-objectClass: inetOrgPerson
 objectclass: top
+objectClass: inetOrgPerson
+objectClass: shadowAccount
+objectClass: posixAccount
+cn: $ldap_user
+sn: $ldap_user
 userPassword: `user_get_pw $ldap_user`
+uidNumber: `user_get_uuid $ldap_user`
+gidNumber: `user_get_uuid $ldap_user`
+homeDirectory: /home/$ldap_user/
 
 EOF
 
