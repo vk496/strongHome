@@ -10,7 +10,6 @@ services:
       - $PWD/test/strongHome-config-test.yaml:/strongHome/strongHome-config-test.yaml:ro
     ports:
       - 389:389
-      - 636:636
 
 
   freeradius:
