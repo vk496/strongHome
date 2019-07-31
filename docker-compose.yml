@@ -41,7 +41,15 @@ services:
   freeradius:
     build: services/radius
     # command: -X
+    environment:
+      STRONGHOME_SERVICE_NAME: "Radius"
     volumes:
+      - type: bind
+        source: $PWD/config/strongHome-schema.yaml
+        target: /strongHome/strongHome-schema.yaml
+      - type: bind
+        source: $PWD/config/strongHome-config.yaml
+        target: /strongHome/strongHome-config.yaml
       - type: bind
         source: $PWD/openssl-ca/dh
         target: /cert/dh

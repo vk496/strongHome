@@ -5,7 +5,11 @@ RUN apk add --no-cache \
   git \
   nmap \
   wpa_supplicant \
-  redis
+  redis \
+  jq \
+  python3
+
+RUN pip3 install yq
 
 
 RUN apk add --no-cache \
