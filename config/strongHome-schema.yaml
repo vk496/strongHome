@@ -18,7 +18,7 @@ mapping:
           - type: str
             enum: &list-services
               - Radius
-              - OwnCloud
+              - NextCloud
               - Email
               - VoIP
       "list_users":

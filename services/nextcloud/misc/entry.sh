@@ -41,8 +41,8 @@ php occ ldap:set-config $ldap_conf ldapTLS 1
 php occ ldap:set-config $ldap_conf ldapAgentName cn=admin-ro,ou=Services,dc=stronghome,dc=vk496
 php occ ldap:set-config $ldap_conf ldapAgentPassword "$(cat /cert/admin-ro-pw)"
 php occ ldap:set-config $ldap_conf ldapBase dc=strongHome,dc=vk496
-php occ ldap:set-config $ldap_conf ldapUserFilter '(&(objectClass=inetOrgPerson)(memberOf=cn=OwnCloud,ou=Services,dc=strongHome,dc=vk496))'
-php occ ldap:set-config $ldap_conf ldapLoginFilter '(&(&(objectClass=inetOrgPerson)(memberOf=cn=OwnCloud,ou=Services,dc=strongHome,dc=vk496))(uid=%uid))'
+php occ ldap:set-config $ldap_conf ldapUserFilter '(&(objectClass=inetOrgPerson)(memberOf=cn=NextCloud,ou=Services,dc=strongHome,dc=vk496))'
+php occ ldap:set-config $ldap_conf ldapLoginFilter '(&(&(objectClass=inetOrgPerson)(memberOf=cn=NextCloud,ou=Services,dc=strongHome,dc=vk496))(uid=%uid))'
 php occ ldap:set-config $ldap_conf ldapUserDisplayName uid
 php occ ldap:set-config $ldap_conf ldapUserFilterObjectclass inetOrgPerson
 php occ ldap:set-config $ldap_conf ldapConfigurationActive 1
