@@ -208,20 +208,20 @@ authenticate {
 	#  A back-end database listed in the 'authorize' section
 	#  MUST supply a CLEAR TEXT password.  Encrypted passwords
 	#  won't work.
-	Auth-Type CHAP {
-		chap
-	}
+	# Auth-Type CHAP {
+	#	 chap
+	# }
 
 	#
 	#  MSCHAP authentication.
-	Auth-Type MS-CHAP {
-		mschap
-	}
+	#Auth-Type MS-CHAP {
+	#	mschap
+	#}
 
 	#
 	#  For old names, too.
 	#
-	mschap
+	#mschap
 
 	#
 	#  Pluggable Authentication Modules.

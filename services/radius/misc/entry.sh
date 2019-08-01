@@ -54,6 +54,13 @@ for file in $(find /etc/raddb/ -type f -name \*.strongHome); do
   echo "@strongHome@ - $renamed_file patched!"
 done
 
+# Disable modules
+
+rm /etc/raddb/mods-enabled/chap
+#rm /etc/raddb/mods-enabled/mschap
+
+
+
 if [[ $STRONGHOME_TEST ]]; then
   set -E
 

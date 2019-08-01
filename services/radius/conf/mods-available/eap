@@ -24,7 +24,7 @@ eap {
 	#  then that EAP type takes precedence over the
 	#  default type configured here.
 	#
-	default_eap_type = ttls
+	default_eap_type = peap
 
 	#  A list is maintained to correlate EAP-Response
 	#  packets with EAP-Request packets.  After a
@@ -77,8 +77,8 @@ eap {
 	#  for wireless connections.  It is insecure, and does
 	#  not provide for dynamic WEP keys.
 	#
-	md5 {
-	}
+	#md5 {
+	#}
 
 
 	#  EAP-pwd -- secure password-based authentication
@@ -661,7 +661,7 @@ eap {
 		#  EAP conversation, then this configuration entry is
 		#  ignored.
 		#
-		default_eap_type = md5
+		default_eap_type = pap
 
 		#  The tunneled authentication request does not usually
 		#  contain useful attributes like 'Calling-Station-Id',
@@ -787,7 +787,7 @@ eap {
 		#  as that is the default type supported by
 		#  Windows clients.
 		#
-		default_eap_type = mschapv2
+		default_eap_type = gtc
 
 		#  The PEAP module also has these configuration
 		#  items, which are the same as for TTLS.
@@ -860,7 +860,7 @@ eap {
 	#  of MS-CHAPv2 in EAP by Cisco, which FreeRADIUS does not
 	#  currently support.
 	#
-	mschapv2 {
+	#mschapv2 {
 		#  Prior to version 2.1.11, the module never
 		#  sent the MS-CHAP-Error message to the
 		#  client.  This worked, but it had issues
@@ -885,7 +885,7 @@ eap {
 		#  identify it.
 		#
 	#	identity = "FreeRADIUS"
-	}
+	#}
 
 
 	#  EAP-FAST
