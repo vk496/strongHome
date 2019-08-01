@@ -36,6 +36,15 @@ services:
     environment:
       STRONGHOME_TEST: "true"
 
+  simpleca:
+    environment:
+      STRONGHOME_TEST: "true"
+    volumes:
+      - type: bind
+        source: $PWD/test/simpleca
+        target: /test
+        read_only: true
+
   # webldap:
   #   image: osixia/phpldapadmin:0.8.0
   #   environment:

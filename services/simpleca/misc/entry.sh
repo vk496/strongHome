@@ -18,6 +18,15 @@ adduser nginx root
 spawn-fcgi -u nginx -s /run/fcgi.sock /usr/bin/fcgiwrap && nginx -g "daemon off;" &
 MAIN_PROCESS=$!
 
+if [[ $STRONGHOME_TEST ]]; then
+  echo "@strongHome@ - Running tests"
+
+  bats /test
+  exit $?
+
+fi
+
+
 wait_and_exit &
 
 wait $MAIN_PROCESS
