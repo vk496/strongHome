@@ -13,7 +13,18 @@ function wait_and_exit () {
 
 if [[ $STRONGHOME_TEST ]]; then
   wait_and_exit &
+  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config-test.yaml
+else
+  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
 fi
+
+if [[ $STRONGHOME_SERVICE_NAME ]] && [[ ! $(cat $STRONGHOME_CONFIG_FILE | yq -r '.strongHome.list_services[]') == *"$STRONGHOME_SERVICE_NAME"* ]]; then
+  echo "@strongHome@ - Service was not defined in YAML config. Shutting down...."
+  exit 0
+fi
+
+
+
 
 openssl x509 -in /cert/ca.pem -inform PEM -out /usr/local/share/ca-certificates/strongHome_ca.crt
 
