@@ -10,6 +10,8 @@ function wait_and_exit () {
   kill -s SIGTERM 1
 }
 
+echo "@strongHome@ - Starting SimpleCA"
+
 chmod g+r /cert/radius-key.pem
 adduser nginx root
 

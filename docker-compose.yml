@@ -100,6 +100,38 @@ services:
     networks:
       - redis-net
 
+
+  nextcloud:
+    build: services/nextcloud
+    environment:
+      REDIS_HOST: redis
+      NEXTCLOUD_ADMIN_USER: admin
+      NEXTCLOUD_ADMIN_PASSWORD: admin # Will be changed automatically
+      SQLITE_DATABASE: test
+    volumes:
+      - type: bind
+        source: $PWD/openssl-ca/ca.pem
+        target: /cert/ca.pem
+      - type: bind
+        source: $PWD/openssl-ca/admin-ro-pw
+        target: /cert/admin-ro-pw
+    ports:
+      - "8080:80"
+    networks:
+      - ldap-net
+      - redis-net
+
+
+
+  # asterisk:
+  #   build: services/voip
+  #   ports:
+  #    - "5060:5060/udp"
+  #    - "5060:5060/tcp"
+  #    - "10000-10099:10000-10099/udp"
+  #    - "8088:8088"
+  #    - "8089:8089"
+
   # webldap:
   #   image: osixia/phpldapadmin:0.8.0
   #   environment:

@@ -6,8 +6,14 @@ services:
       STRONGHOME_TEST: "true"
       LDAP_ADMIN_PASSWORD: "admin"
     volumes:
-      - $PWD/test/ldap:/test:ro
-      - $PWD/test/strongHome-config-test.yaml:/strongHome/strongHome-config-test.yaml:ro
+      - type: bind
+        source: $PWD/test/ldap
+        target: /test
+        read_only: true
+      - type: bind
+        source: $PWD/test/strongHome-config-test.yaml
+        target: /strongHome/strongHome-config-test.yaml
+        read_only: true
     ports:
       - 389:389
 
@@ -17,8 +23,18 @@ services:
     environment:
       STRONGHOME_TEST: "true"
     volumes:
-      - $PWD/test/radius:/test:ro
+      - type: bind
+        source: $PWD/test/radius
+        target: /test
+        read_only: true
+      - type: bind
+        source: $PWD/test/strongHome-config-test.yaml
+        target: /strongHome/strongHome-config-test.yaml
+        read_only: true
 
+  nextcloud:
+    environment:
+      STRONGHOME_TEST: "true"
 
   # webldap:
   #   image: osixia/phpldapadmin:0.8.0
