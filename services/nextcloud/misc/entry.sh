@@ -27,7 +27,7 @@ function setup_service() {
 
 echo "@strongHome@ - Nextcloud started!"
 
-
+# Set LDAP link
 bash <<"EOF"
 su - www-data -s /bin/bash
 cd /var/www/html/
@@ -49,6 +49,11 @@ php occ ldap:set-config $ldap_conf ldapConfigurationActive 1
 php occ ldap:set-config $ldap_conf hasMemberOfFilterSupport 1
 EOF
 
+# Fix admin password
+sqlite3 /var/www/html/data/${SQLITE_DATABASE}.db <<END_SQL
+.timeout 2000
+UPDATE oc_users SET password = '2|$(cat /strongHome/strongHome-config.yaml | yq -r '.strongHome.admin_password' | cut -d"}" -f2-)' WHERE uid = '$NEXTCLOUD_ADMIN_USER';
+END_SQL
 
 }
 

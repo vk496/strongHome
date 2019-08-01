@@ -115,6 +115,9 @@ services:
       - type: bind
         source: $PWD/openssl-ca/admin-ro-pw
         target: /cert/admin-ro-pw
+      - type: bind
+        source: $PWD/config/strongHome-config.yaml
+        target: /strongHome/strongHome-config.yaml
     ports:
       - "8080:80"
     networks:
