@@ -41,11 +41,11 @@ EOF
 
 
 
-@test "EAP-TTLS/EAP-MD5 Reject" {
+@test "EAP-TTLS/EAP-MD5 Accept" {
   generate_config TTLS autheap=MD5
 
   run eapol_test -t 5 -s testing123 -c $BATS_TMPDIR/eapol_test.conf
-  assert_failure
+  assert_success
 }
 
 @test "EAP-TTLS/EAP-GTC Accept" {
@@ -55,11 +55,11 @@ EOF
   assert_success
 }
 
-@test "EAP-TTLS/EAP-MSCHAPV2 Reject" {
+@test "EAP-TTLS/EAP-MSCHAPV2 Accept" {
   generate_config TTLS autheap=MSCHAPV2
 
   run eapol_test -t 5 -s testing123 -c $BATS_TMPDIR/eapol_test.conf
-  assert_failure
+  assert_success
 }
 
 @test "EAP-TTLS/PAP Accept" {
