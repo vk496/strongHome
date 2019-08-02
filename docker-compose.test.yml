@@ -5,24 +5,13 @@ services:
     environment:
       STRONGHOME_TEST: "true"
       LDAP_ADMIN_PASSWORD: "admin"
-    volumes:
-      - type: bind
-        source: $PWD/test/ldap
-        target: /test
-        read_only: true
     ports:
       - 389:389
-
 
   freeradius:
     # command: -X
     environment:
       STRONGHOME_TEST: "true"
-    volumes:
-      - type: bind
-        source: $PWD/test/radius
-        target: /test
-        read_only: true
 
   nextcloud:
     environment:
@@ -31,11 +20,6 @@ services:
   simpleca:
     environment:
       STRONGHOME_TEST: "true"
-    volumes:
-      - type: bind
-        source: $PWD/test/simpleca
-        target: /test
-        read_only: true
 
   # webldap:
   #   image: osixia/phpldapadmin:0.8.0

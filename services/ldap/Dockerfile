@@ -22,6 +22,8 @@ RUN set -e; \
     git clone --depth 1 https://github.com/ztombol/bats-support /bats/bats-support; \
     git clone --depth 1 https://github.com/ztombol/bats-assert /bats/bats-assert
 
+COPY test /test
+
 COPY lib/asterisk.schema /container/service/slapd/assets/config/bootstrap/schema/mmc/
 
 COPY lib/03-memberOf.ldif /container/service/slapd/assets/config/bootstrap/ldif/03-memberOf.ldif

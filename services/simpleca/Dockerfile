@@ -26,6 +26,7 @@ RUN set -e; \
     git clone --depth 1 https://github.com/ztombol/bats-support /bats/bats-support; \
     git clone --depth 1 https://github.com/ztombol/bats-assert /bats/bats-assert
 
+COPY test /test
 
 COPY web/* /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/nginx.conf

@@ -32,6 +32,8 @@ RUN set -e; \
     git clone --depth 1 https://github.com/ztombol/bats-support /bats/bats-support; \
     git clone --depth 1 https://github.com/ztombol/bats-assert /bats/bats-assert
 
+COPY test /test
+
 COPY conf/clients.conf /etc/raddb/clients.conf.strongHome
 COPY conf/users /etc/raddb/mods-config/files/authorize
 

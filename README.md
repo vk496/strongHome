@@ -19,7 +19,7 @@ docker run -it --rm -v $PWD:/remote vk496/stronghome-utils config
 For test pruposes, you can use directly the example config:
 
 ```bash
-cp test/strongHome-config-test.yaml config/strongHome-config.yaml
+cp config/strongHome-config-test.yaml config/strongHome-config.yaml
 ```
 
 ### Validate config
@@ -35,7 +35,7 @@ docker-compose --compatibility up --build -d
 
 ## Unit tests
 ```bash
-docker-compose --compatibility -f docker-compose.yml -f test/docker-compose.test.yml up --build; docker-compose down
+docker-compose --compatibility -f docker-compose.yml -f docker-compose.test.yml up --build; docker-compose down
 ```
 
 
