@@ -11,11 +11,10 @@ function wait_and_exit () {
   kill -s SIGTERM 1
 }
 
+STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
+
 if [[ $STRONGHOME_TEST ]]; then
   wait_and_exit &
-  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config-test.yaml
-else
-  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
 fi
 
 if [[ $STRONGHOME_SERVICE_NAME ]] && [[ ! $(cat $STRONGHOME_CONFIG_FILE | yq -r '.strongHome.list_services[]') == *"$STRONGHOME_SERVICE_NAME"* ]]; then

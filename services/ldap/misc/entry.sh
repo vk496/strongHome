@@ -6,11 +6,7 @@ if [ ! /strongHome/strongHome-schema.yaml ]; then
   exit 1
 fi
 
-if [[ $STRONGHOME_TEST ]]; then
-  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config-test.yaml
-else
-  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
-fi
+STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
 
 if [ ! ${STRONGHOME_CONFIG_FILE} ]; then
   >&2 echo "Missing ${STRONGHOME_CONFIG_FILE} - config YAML"

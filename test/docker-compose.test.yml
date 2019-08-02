@@ -10,10 +10,6 @@ services:
         source: $PWD/test/ldap
         target: /test
         read_only: true
-      - type: bind
-        source: $PWD/test/strongHome-config-test.yaml
-        target: /strongHome/strongHome-config-test.yaml
-        read_only: true
     ports:
       - 389:389
 
@@ -26,10 +22,6 @@ services:
       - type: bind
         source: $PWD/test/radius
         target: /test
-        read_only: true
-      - type: bind
-        source: $PWD/test/strongHome-config-test.yaml
-        target: /strongHome/strongHome-config-test.yaml
         read_only: true
 
   nextcloud:

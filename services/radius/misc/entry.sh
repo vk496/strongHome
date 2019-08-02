@@ -1,11 +1,7 @@
 #!/bin/bash
 set -e
 
-if [[ $STRONGHOME_TEST ]]; then
-  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config-test.yaml
-else
-  STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
-fi
+STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
 
 if [[ $STRONGHOME_SERVICE_NAME ]] && [[ ! $(cat $STRONGHOME_CONFIG_FILE | yq -r '.strongHome.list_services[]') == *"$STRONGHOME_SERVICE_NAME"* ]]; then
   echo "@strongHome@ - Service was not defined in YAML config. Shutting down...."
