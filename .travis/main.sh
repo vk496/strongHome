@@ -52,6 +52,10 @@ setup_dependencies() {
   wget https://github.com/docker/buildx/releases/download/v0.3.0/buildx-v0.3.0.linux-amd64 -O ~/.docker/cli-plugins/docker-buildx
   chmod a+x ~/.docker/cli-plugins/docker-buildx
 
+  docker buildx create --name mybuilder --use
+  docker run --rm --privileged docker/binfmt:820fdd95a9972a5308930a2bdfb8573dd4447ad3
+  docker buildx inspect --bootstrap
+
   docker info
   docker buildx version
 }
