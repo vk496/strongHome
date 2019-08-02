@@ -30,12 +30,12 @@ docker run --rm -v $PWD:/remote vk496/stronghome-utils pykwalify -s config/stron
 
 ### Start the project
 ```bash
-docker-compose up --build --abort-on-container-exit
+docker-compose --compatibility up --build -d
 ```
 
 ## Unit tests
 ```bash
-docker-compose -f docker-compose.yml -f test/docker-compose.test.yml up --build; docker-compose down
+docker-compose --compatibility -f docker-compose.yml -f test/docker-compose.test.yml up --build; docker-compose down
 ```
 
 
@@ -51,6 +51,10 @@ docker-compose -f docker-compose.yml -f test/docker-compose.test.yml up --build;
   - [ ] Tests for all kind of radius auth methods
 - [x] YAML config
   - [x] Schema
+- [X] NextCloud
+  - [X] LDAP
+  - [ ] Unit tests
+  - [ ] Server side encryption
 - [ ] Email server
 - [ ] VoIP?
 - [x] Sync startup containers
