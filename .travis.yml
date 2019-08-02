@@ -15,8 +15,14 @@ script:
   - set -e # https://github.com/travis-ci/travis-ci/issues/1066
   - ./utils/generate-crypto-stuff.sh
   - cp config/strongHome-config-test.yaml config/strongHome-config.yaml
-  - docker-compose --compatibility -f docker-compose.yml -f config/docker-compose.test.yml up --build
+  - docker-compose -f docker-compose.yml -f docker-compose.test.yml build --parallel
+  - docker-compose --compatibility -f docker-compose.yml -f docker-compose.test.yml up --build
+  - docker-compose ps
   - exit $(docker-compose ps -q | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v '^0' | wc -l | tr -d ' ')
+
+after_failure:
+  - docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build #Try without memmory limits
+  - docker-compose ps
 
 notifications:
   email: false

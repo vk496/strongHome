@@ -79,9 +79,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 50M
+          memory: 90M
         reservations:
-          memory: 20M
+          memory: 30M
     ports:
       - "1812-1813:1812-1813/udp"
     networks:
@@ -110,7 +110,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 10M
+          memory: 30M
     ports:
       - "80:80"
     networks:
