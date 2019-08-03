@@ -9,7 +9,7 @@ RUN apk add --update \
       util-linux \
       nano \
       git \
-      nmap \
+      netcat-openbsd \
       bash \
       file
 
