@@ -6,16 +6,23 @@ services:
   - docker
 
 env:
-  - DOCKER_CLI_EXPERIMENTAL=enabled
+  global:
+    - DOCKER_CLI_EXPERIMENTAL=enabled
 
 matrix:
   include:
   - name: "x86_64"
     env: BUILDPLATFORM=linux/amd64
+  - name: "arm32v6"
+    env: BUILDPLATFORM=linux/arm/v6
   - name: "arm32v7"
     env: BUILDPLATFORM=linux/arm/v7
   - name: "arm64"
     env: BUILDPLATFORM=linux/arm64
+  - name: "ppc64le"
+    env: BUILDPLATFORM=linux/ppc64le
+  - name: "s390x"
+    env: BUILDPLATFORM=linux/s390x
 
 before_install:
   - ./.travis/main.sh
