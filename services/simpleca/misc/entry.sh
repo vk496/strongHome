@@ -21,6 +21,8 @@ MAIN_PROCESS=$!
 if [[ $STRONGHOME_TEST ]]; then
   echo "@strongHome@ - Running tests"
 
+  sleep 2 # Wait a little bit the web server before start tests
+
   bats /test
   exit $?
 
