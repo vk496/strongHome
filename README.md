@@ -1,4 +1,10 @@
 # strongHome
+![x86_64](https://badges.herokuapp.com/travis/vk496/strongHome?branch=dev&env=BUILDPLATFORM=linux/amd64&label=dev-x86_64)
+![arm32v6](https://badges.herokuapp.com/travis/vk496/strongHome?branch=dev&env=BUILDPLATFORM=linux/arm/v6&label=dev-arm32v6)
+![arm32v7](https://badges.herokuapp.com/travis/vk496/strongHome?branch=dev&env=BUILDPLATFORM=linux/arm/v7&label=dev-arm32v7)
+![arm64](https://badges.herokuapp.com/travis/vk496/strongHome?branch=dev&env=BUILDPLATFORM=linux/arm64&label=dev-arm64)
+![ppc64le](https://badges.herokuapp.com/travis/vk496/strongHome?branch=dev&env=BUILDPLATFORM=linux/ppc64le&label=dev-ppc64le)
+![s390x](https://badges.herokuapp.com/travis/vk496/strongHome?branch=dev&env=BUILDPLATFORM=linux/s390x&label=dev-s390x)
 
 ## Deploy
 

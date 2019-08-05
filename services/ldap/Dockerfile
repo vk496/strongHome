@@ -1,9 +1,10 @@
-FROM vk496/openldap:1.2.4
+FROM vk496/openldap:stronghome
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     python3-pip \
     python3-setuptools \
     git \
+    jq \
     netcat \
     redis-server \
     bc
