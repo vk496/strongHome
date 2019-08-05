@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Register possible unit test as soon as possible
+redis-cli -h redis rpush STRONGHOME_SERVICES_TESTING freeradius
+
 STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
 
 if [[ $STRONGHOME_SERVICE_NAME ]] && [[ ! $(cat $STRONGHOME_CONFIG_FILE | yq -r '.strongHome.list_services[]') == *"$STRONGHOME_SERVICE_NAME"* ]]; then
@@ -9,19 +12,7 @@ if [[ $STRONGHOME_SERVICE_NAME ]] && [[ ! $(cat $STRONGHOME_CONFIG_FILE | yq -r 
 fi
 
 
-exit_on_error() {
-  send_redis
-  echo "@strongHome@ - Shutting down...."
-}
-
-send_redis() {
-  redis-cli -h redis setnx STRONGHOME_TEST_END READY
-  sleep 4
-  redis-cli -h redis shutdown nosave
-}
-
 echo "@strongHome@ - Waiting for LDAP"
-trap exit_on_error ERR
 
 while [[ $(redis-cli -h redis get STRONGHOME_LDAP) != "READY" ]]; do
   sleep 1
@@ -73,10 +64,12 @@ if [[ $STRONGHOME_TEST ]]; then
   echo "@strongHome@ - Running tests"
 
   bats /test
+  the_exit_code=$?
 
-  send_redis
+  # Service finished unit tests
+  redis-cli -h redis lrem STRONGHOME_SERVICES_TESTING 0 freeradius
 
-  exit 0
+  exit $the_exit_code
 fi
 
 

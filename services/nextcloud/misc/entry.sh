@@ -1,29 +1,31 @@
 #!/bin/bash
 set -e
 
-trap "exit 0" SIGTERM
+trap "exit 0" SIGUSR1
+trap "exit 1" SIGUSR2
 
-function wait_and_exit () {
-  while [ "$(redis-cli -h redis get STRONGHOME_TEST_END)" != "READY" ]; do
-    sleep 1
-  done
-
-  kill -s SIGTERM 1
-}
+# Register possible unit test as soon as possible
+redis-cli -h redis rpush STRONGHOME_SERVICES_TESTING nextcloud
 
 function execute_tests () {
   echo "@strongHome@ - Running tests"
 
   cd /
   bats /test
-  exit $?
+  the_exit_code=$?
+
+  # Service finished unit tests
+  redis-cli -h redis lrem STRONGHOME_SERVICES_TESTING 0 nextcloud
+
+  if [[ $the_exit_code -eq 0 ]]; then
+    kill -s SIGUSR1 1
+  else
+    kill -s SIGUSR2 1
+  fi
+
 }
 
 STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
-
-if [[ $STRONGHOME_TEST ]]; then
-  wait_and_exit &
-fi
 
 if [[ $STRONGHOME_SERVICE_NAME ]] && [[ ! $(cat $STRONGHOME_CONFIG_FILE | yq -r '.strongHome.list_services[]') == *"$STRONGHOME_SERVICE_NAME"* ]]; then
   echo "@strongHome@ - Service was not defined in YAML config. Shutting down...."

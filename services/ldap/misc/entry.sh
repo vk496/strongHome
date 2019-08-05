@@ -59,18 +59,26 @@ if [[ $STRONGHOME_TEST ]]; then
 
   done < $tmp_fifo
 
+  redis-cli -h redis rpush STRONGHOME_SERVICES_TESTING openldap
   redis-cli -h redis setnx STRONGHOME_LDAP READY
 
   echo "@strongHome@ - Running tests"
   bats /test
+  the_exit_code=$?
 
   rm $tmp_fifo
 
-  while [[ $(redis-cli -h redis get STRONGHOME_TEST_END) != "READY" ]]; do
+  # Service finished unit tests
+  redis-cli -h redis lrem STRONGHOME_SERVICES_TESTING 0 openldap
+
+  while [[ $(redis-cli -h redis lrange STRONGHOME_SERVICES_TESTING 0 -1) != "" ]]; do
     sleep 1
   done
 
-  exit 0
+  # Exit redis service
+  redis-cli -h redis shutdown nosave
+
+  exit $the_exit_code
 fi
 
 
