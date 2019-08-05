@@ -10,19 +10,23 @@ env:
     - DOCKER_CLI_EXPERIMENTAL=enabled
 
 matrix:
+  fast_finish: true
   include:
-  - name: "x86_64"
-    env: BUILDPLATFORM=linux/amd64
-  - name: "arm32v6"
-    env: BUILDPLATFORM=linux/arm/v6
-  - name: "arm32v7"
-    env: BUILDPLATFORM=linux/arm/v7
-  - name: "arm64"
-    env: BUILDPLATFORM=linux/arm64
-  - name: "ppc64le"
-    env: BUILDPLATFORM=linux/ppc64le
-  - name: "s390x"
-    env: BUILDPLATFORM=linux/s390x
+    - name: "x86_64"
+      env: BUILDPLATFORM=linux/amd64
+    - name: "arm32v6"
+      env: BUILDPLATFORM=linux/arm/v6
+    - name: "arm32v7"
+      env: BUILDPLATFORM=linux/arm/v7
+    - name: "arm64"
+      env: BUILDPLATFORM=linux/arm64
+    - name: "ppc64le"
+      env: BUILDPLATFORM=linux/ppc64le
+    - name: "s390x"
+      env: BUILDPLATFORM=linux/s390x
+  allow_failures:
+    - env: BUILDPLATFORM=linux/ppc64le
+    - env: BUILDPLATFORM=linux/s390x
 
 before_install:
   - ./.travis/main.sh
@@ -32,7 +36,7 @@ script:
   - set -e # https://github.com/travis-ci/travis-ci/issues/1066
   - ./utils/generate-crypto-stuff.sh
   - cp config/strongHome-config-test.yaml config/strongHome-config.yaml
-  - docker-compose build --build-arg BUILDPLATFORM=$BUILDPLATFORM
+  - docker-compose build --parallel --build-arg BUILDPLATFORM=$BUILDPLATFORM
   - docker-compose -f docker-compose.yml -f docker-compose.test.yml up
   - docker-compose ps
   - exit $(docker-compose ps -q | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v '^0' | wc -l | tr -d ' ')
