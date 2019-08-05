@@ -34,6 +34,17 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_SUBJECT=freeradius \
 vk496/omgwtfssl
 
+docker run --rm -it -v $PWD/openssl-ca:/certs \
+-e SSL_SIZE=4096 \
+-e CA_SUBJECT="AAA ROOT CA strongHome" \
+-e CA_EXPIRE=3650 `# 10 years to expire the CA` \
+-e SSL_KEY=nextcloud-key.pem \
+-e SSL_CSR=nextcloud.csr \
+-e SSL_CERT=nextcloud.pem \
+-e SSL_EXPIRE=730 `# 2 years` \
+-e SSL_SUBJECT=nextcloud \
+vk496/omgwtfssl
+
 (cd openssl-ca && sudo rm secret.yaml)
 
 #radius shared secret

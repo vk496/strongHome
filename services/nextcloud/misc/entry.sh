@@ -11,6 +11,14 @@ function wait_and_exit () {
   kill -s SIGTERM 1
 }
 
+function execute_tests () {
+  echo "@strongHome@ - Running tests"
+
+  cd /
+  bats /test
+  exit $?
+}
+
 STRONGHOME_CONFIG_FILE=/strongHome/strongHome-config.yaml
 
 if [[ $STRONGHOME_TEST ]]; then
@@ -64,6 +72,10 @@ sqlite3 /var/www/html/data/${SQLITE_DATABASE}.db <<END_SQL
 .timeout 2000
 UPDATE oc_users SET password = '2|$(cat /strongHome/strongHome-config.yaml | yq -r '.strongHome.admin_password' | cut -d"}" -f2-)' WHERE uid = '$NEXTCLOUD_ADMIN_USER';
 END_SQL
+
+if [[ $STRONGHOME_TEST ]]; then
+  execute_tests
+fi
 
 }
 

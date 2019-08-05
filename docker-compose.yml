@@ -130,6 +130,12 @@ services:
         source: $PWD/openssl-ca/ca.pem
         target: /cert/ca.pem
       - type: bind
+        source: $PWD/openssl-ca/nextcloud.pem
+        target: /cert/nextcloud.pem
+      - type: bind
+        source: $PWD/openssl-ca/nextcloud-key.pem
+        target: /cert/nextcloud-key.pem
+      - type: bind
         source: $PWD/openssl-ca/admin-ro-pw
         target: /cert/admin-ro-pw
       - type: bind
@@ -137,6 +143,7 @@ services:
         target: /strongHome/strongHome-config.yaml
     ports:
       - "8080:80"
+      - "443:443"
     networks:
       - ldap-net
       - redis-net
