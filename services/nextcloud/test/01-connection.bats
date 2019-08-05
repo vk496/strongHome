@@ -23,3 +23,28 @@ load '/bats/bats-assert/load.bash'
   assert_failure
   assert_output --partial "400 Bad Request"
 }
+
+@test "Port 443 Accept SSL request" {
+  run echo "Q" |openssl s_client -connect 127.0.0.1:443
+
+  assert_success
+}
+
+@test "Port 443 SSL signed by CA" {
+  run echo "Q" |openssl s_client -connect 127.0.0.1:443 -verify_return_error -verifyCAfile /cert/ca.pem
+
+  assert_success
+}
+
+
+@test "Port 443 SSL support TLSv1.3" {
+  run echo "Q" |openssl s_client -connect 127.0.0.1:443 -tls1_3
+
+  assert_success
+}
+
+@test "Port 443 HSTS enabled" {
+  run curl -k --fail -I https://127.0.0.1
+
+  assert_output --partial "Strict-Transport-Security:"
+}

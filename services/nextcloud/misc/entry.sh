@@ -8,6 +8,7 @@ trap "exit 1" SIGUSR2
 redis-cli -h redis rpush STRONGHOME_SERVICES_TESTING nextcloud
 
 function execute_tests () {
+  set +e
   echo "@strongHome@ - Running tests"
 
   cd /

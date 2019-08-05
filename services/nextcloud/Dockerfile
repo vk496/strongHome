@@ -26,7 +26,7 @@ RUN set -e; \
 COPY test /test
 
 COPY conf/ /etc/apache2/sites-enabled/
-RUN a2enmod ssl
+RUN a2enmod ssl headers
 
 COPY misc/entry.sh /
 
