@@ -1,11 +1,14 @@
 #!/bin/bash
-set -e
 
 trap "exit 0" SIGUSR1
-trap "exit 1" SIGUSR2
+trap "exit 1" SIGUSR2 ERR
 
 # Register possible unit test as soon as possible
 redis-cli -h redis rpush STRONGHOME_SERVICES_TESTING nextcloud
+
+function send_end_test() {
+  redis-cli -h redis lrem STRONGHOME_SERVICES_TESTING 0 nextcloud
+}
 
 function execute_tests () {
   set +e
@@ -16,7 +19,7 @@ function execute_tests () {
   the_exit_code=$?
 
   # Service finished unit tests
-  redis-cli -h redis lrem STRONGHOME_SERVICES_TESTING 0 nextcloud
+  send_end_test
 
   if [[ $the_exit_code -eq 0 ]]; then
     kill -s SIGUSR1 1
@@ -40,6 +43,8 @@ openssl x509 -in /cert/ca.pem -inform PEM -out /usr/local/share/ca-certificates/
 
 update-ca-certificates
 
+
+cat /cert/ca.pem /cert/nextcloud.pem > /cert/nextcloud-full.pem
 
 # exec 3< <(/entrypoint.sh "${@:-apache2-foreground}")
 
@@ -90,4 +95,6 @@ while read line; do
   echo "$line"
 done < <(/entrypoint.sh "${@:-apache2-foreground}")
 
+send_end_test
+exit 1 # We should never reach here
 # cat <&3

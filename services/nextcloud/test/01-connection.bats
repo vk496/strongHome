@@ -48,3 +48,35 @@ load '/bats/bats-assert/load.bash'
 
   assert_output --partial "Strict-Transport-Security:"
 }
+
+# @test "HTTP/2 enabled" {
+#   run curl -k -sI https://127.0.0.1:443 -o/dev/null -w '%{http_version}\n'
+#
+#   assert_output "2"
+# }
+
+# @test "testssl connection" {
+#   run testssl --mode parallel -c 127.0.0.1:443
+#
+#   refute_output --partial "No connection"
+# }
+
+@test "testssl vulnerabilities" {
+  run testssl --mode parallel -U 127.0.0.1:443
+
+  refute_output --partial "VULNERABLE (NOT ok)"
+}
+
+
+@test "testssl bugs" {
+  run testssl --mode parallel -g 127.0.0.1:443
+
+  assert_output --partial "No bugs found"
+}
+
+
+@test "testssl headers" {
+  run testssl --mode parallel -h 127.0.0.1:443
+
+  refute_output --partial "misconfiguration:"
+}

@@ -91,3 +91,5 @@ while read line; do
 
   echo "$line"
 done < <(/container/tool/run "$@" 2>&1)
+
+exit 1 # We should never reach here

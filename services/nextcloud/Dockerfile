@@ -7,7 +7,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     sqlite3 \
     jq \
     netcat \
-    git
+    git \
+    bsdmainutils \
+    host
 
 RUN pip3 install pykwalify yq
 
@@ -23,10 +25,20 @@ RUN set -e; \
     git clone --depth 1 https://github.com/ztombol/bats-support /bats/bats-support; \
     git clone --depth 1 https://github.com/ztombol/bats-assert /bats/bats-assert
 
+RUN set -e; \
+    cd /; \
+    git clone --depth 1 https://github.com/drwetter/testssl.sh; \
+    curl -L https://testssl.sh > /usr/bin/testssl; \
+    chmod +x /usr/bin/testssl
+
+ENV TESTSSL_INSTALL_DIR=/testssl.sh
+
 COPY test /test
 
 COPY conf/ /etc/apache2/sites-enabled/
-RUN a2enmod ssl headers
+
+RUN set -e; \
+    a2enmod ssl headers http2
 
 COPY misc/entry.sh /
 
