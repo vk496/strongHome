@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     netcat \
     git \
     bsdmainutils \
-    host
+    host \
+    expect
 
 RUN pip3 install pykwalify yq
 

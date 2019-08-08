@@ -73,6 +73,11 @@ php occ ldap:set-config $ldap_conf ldapUserDisplayName uid
 php occ ldap:set-config $ldap_conf ldapUserFilterObjectclass inetOrgPerson
 php occ ldap:set-config $ldap_conf ldapConfigurationActive 1
 php occ ldap:set-config $ldap_conf hasMemberOfFilterSupport 1
+
+php occ app:enable encryption
+#expect -c 'spawn php occ encryption:disable-master-key; expect "Warning:"; send "y\r"; interact;'
+php occ encryption:enable
+php occ encryption:status
 EOF
 
 # Fix admin password
@@ -89,11 +94,13 @@ fi
 
 
 while read line; do
-  if [[ $line == *"Nextcloud was successfully installed"* ]]; then
+  if [[ $line == *"Nextcloud was successfully installed"* ]]; then # Only start the first time
+#  if [[ $line =~ .*core:notice.+Command\ line:.* ]]; then #Start setup every container start
     setup_service &
   fi
   echo "$line"
 done < <(/entrypoint.sh "${@:-apache2-foreground}")
+#done < <(/entrypoint.sh "${@:-apache2-foreground}" 2>&1) #Start setup every container start
 
 send_end_test
 exit 1 # We should never reach here

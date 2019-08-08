@@ -146,6 +146,7 @@ services:
       - type: bind
         source: $PWD/config/strongHome-config.yaml
         target: /strongHome/strongHome-config.yaml
+      - nextcloud_storage:/var/www/html
     depends_on:
       - redis
     ports:
@@ -175,6 +176,10 @@ services:
   #     - "80:80"
   #   networks:
   #     - ldap-net
+
+volumes:
+  nextcloud_storage:
+
 
 networks:
   ldap-net:

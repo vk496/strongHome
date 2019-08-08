@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 sudo rm -rf openssl-ca
 mkdir openssl-ca
 
@@ -10,7 +10,7 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e CA_EXPIRE=3650 `# 10 years to expire the CA` \
 vk496/omgwtfssl
 
-(cd openssl-ca && sudo rm secret.yaml key.* cert.pem)
+(cd openssl-ca && sudo rm  key.* cert.pem)
 
 docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_SIZE=4096 \
@@ -44,8 +44,6 @@ docker run --rm -it -v $PWD/openssl-ca:/certs \
 -e SSL_EXPIRE=730 `# 2 years` \
 -e SSL_SUBJECT=nextcloud \
 vk496/omgwtfssl
-
-(cd openssl-ca && sudo rm secret.yaml)
 
 #radius shared secret
 docker run -v $PWD/openssl-ca:/certs --rm alpine sh -c "< /dev/urandom tr -dc \#@_\$%/\(\)=?A-Z-a-z-0-9 | head -c54 > /certs/radius-shared-secret"
