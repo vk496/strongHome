@@ -12,6 +12,8 @@ env:
 matrix:
   fast_finish: true
   include:
+    - name: "x86"
+      env: BUILDPLATFORM=linux/386
     - name: "x86_64"
       env: BUILDPLATFORM=linux/amd64
     - name: "arm32v6"
@@ -38,10 +40,8 @@ script:
   - cp config/strongHome-config-test.yaml config/strongHome-config.yaml
   - docker-compose build --parallel --build-arg BUILDPLATFORM=$BUILDPLATFORM
   - docker-compose -f docker-compose.yml -f docker-compose.test.yml up
-  - exit $(docker-compose ps -q | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v '^0' | wc -l | tr -d ' ')
-
-after_failure:
   - docker-compose ps
+  - exit $(docker-compose ps -q | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v '^0' | wc -l | tr -d ' ')
 #   - docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build #Try without memmory limits
 
 
